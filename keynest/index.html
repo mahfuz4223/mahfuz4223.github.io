@@ -31,7 +31,9 @@
   ::selection{background:var(--green);color:#04140a}
 
   /* ---------- header ---------- */
-  header{position:sticky;top:0;z-index:60;background:rgba(15,17,21,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header{position:sticky;top:0;z-index:60;background:rgba(15,17,21,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .25s ease}
+  #topbar.scrolled{box-shadow:0 12px 32px rgba(0,0,0,.45)}
+  #logoHome{cursor:pointer}
   .hwrap{max-width:1240px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .logo{display:flex;align-items:center;gap:9px;font-family:"Sora";font-weight:800;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
   .logo .mark{width:32px;height:32px;border-radius:9px;background:var(--green);display:grid;place-items:center;color:#04140a}
@@ -46,10 +48,26 @@
   .chipbtn.on{border-color:var(--green);color:var(--green)}
   .cartbtn{position:relative;padding-right:20px}
   .cartn{position:absolute;top:-6px;right:-6px;background:var(--green);color:#04140a;font-size:11px;font-weight:800;min-width:19px;height:19px;border-radius:99px;display:grid;place-items:center;padding:0 5px}
-  .viewtabs{max-width:1240px;margin:0 auto;padding:0 16px 10px;display:flex;gap:6px}
-  .vtab{background:none;border:0;border-bottom:2px solid transparent;color:var(--ink2);font-weight:700;font-size:14px;padding:6px 10px}
-  .vtab.on{color:var(--ink);border-bottom-color:var(--green)}
-  .vtab .pendot{display:inline-block;background:var(--amber);color:#1a1200;font-size:11px;font-weight:800;border-radius:99px;padding:0 7px;margin-left:5px;vertical-align:2px}
+  /* ---------- slide-in menu ---------- */
+  .menubtn{padding:9px 11px}
+  .mscrim{position:fixed;inset:0;background:rgba(4,6,9,.62);z-index:95;display:none}
+  .mscrim.on{display:block}
+  .menu{position:fixed;top:0;left:0;bottom:0;width:min(330px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:100;display:none;flex-direction:column;overflow:auto}
+  .menu.on{display:flex;animation:menuin .24s ease;box-shadow:var(--shadow)}
+  @keyframes menuin{from{transform:translateX(-44px);opacity:.4}to{transform:none;opacity:1}}
+  .mhead{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
+  .muser{padding:16px;border-bottom:1px solid var(--line)}
+  .mitems{padding:12px;display:flex;flex-direction:column;gap:4px}
+  .mitem{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;text-align:left;padding:11px 12px;border-radius:12px;font-weight:700;font-size:15px;color:var(--ink2)}
+  .mitem:hover{background:var(--card);color:var(--ink)}
+  .mitem.on{background:var(--green-soft);color:var(--green)}
+  .mitem .ic{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--ink2)}
+  .mitem.on .ic{color:var(--green);border-color:rgba(0,200,83,.35)}
+  .mitem small{display:block;font-size:12px;font-weight:600;color:var(--ink3)}
+  .mitem.on small{color:var(--ink2)}
+  .mbadge{margin-left:auto;background:var(--card2);border:1px solid var(--line);color:var(--ink2);font-size:11.5px;font-weight:800;border-radius:99px;padding:2px 8px}
+  .mitem.on .mbadge{border-color:rgba(0,200,83,.35);color:var(--green)}
+  .mfoot{margin-top:auto;padding:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;font-weight:600;line-height:1.7}
 
   main{max-width:1240px;margin:0 auto;padding:18px 16px 80px}
   .view{display:none}
@@ -240,9 +258,10 @@
 
 <div class="proto-banner" role="note"><strong>Prototype demo</strong> — sample products and sample data only. Checkout is a demo: no real payment is taken.</div>
 
-<header>
+<header id="topbar">
   <div class="hwrap">
-    <div class="logo"><span class="mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L19 3m-4 1 3 3"/></svg></span>Key<em>Nest</em></div>
+    <button class="chipbtn menubtn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="logo" id="logoHome" title="Back to the store"><span class="mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L19 3m-4 1 3 3"/></svg></span>Key<em>Nest</em></div>
     <label class="search">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
       <input id="q" type="search" placeholder="Search games, gift cards, subscriptions…" autocomplete="off" />
@@ -255,12 +274,23 @@
       <button class="chipbtn cartbtn" id="cartBtn">Cart <span class="cartn" id="cartN">0</span></button>
     </div>
   </div>
-  <nav class="viewtabs" aria-label="Views">
-    <button class="vtab on" data-view="store">Store</button>
-    <button class="vtab" data-view="library">My Library <span id="libN"></span></button>
-    <button class="vtab" data-view="account">My Account</button>
-  </nav>
 </header>
+
+<div class="mscrim" id="menuScrim"></div>
+<nav class="menu" id="menu" aria-label="Menu">
+  <div class="mhead">
+    <div class="logo" style="font-size:18px"><span class="mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L19 3m-4 1 3 3"/></svg></span>Key<em>Nest</em></div>
+    <button class="chipbtn" id="menuX" aria-label="Close menu" style="padding:7px 11px">✕</button>
+  </div>
+  <div class="muser" id="menuUser"></div>
+  <div class="mitems">
+    <button class="mitem on" data-menu-view="store"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.8"/><path d="M9.5 21v-6h5v6"/></svg></span><span>Store<small>Games, gift cards, subscriptions &amp; top-ups</small></span></button>
+    <button class="mitem" data-menu-view="library"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15.5" r="4.5"/><path d="m11.3 12.2 8.2-8.2"/><path d="m16.5 7 3 3"/></svg></span><span>My Library<small>Your keys &amp; delivery status</small></span><span class="mbadge" id="libN" style="display:none"></span></button>
+    <button class="mitem" data-menu-view="account"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.4-3.8 4.4-5.2 7.5-5.2s6.1 1.4 7.5 5.2"/></svg></span><span>My Account<small>Profile, orders &amp; settings</small></span></button>
+    <button class="mitem" data-menu-view="admin"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg></span><span>Admin Panel<small>Orders, key stock &amp; deliveries</small></span><span class="mbadge" id="menuPenN" style="display:none"></span></button>
+  </div>
+  <div class="mfoot">Prices in <button class="linklike" id="menuCur">USD $</button> — tap to switch currency.<br/>Instant delivery · 14-day bad-key guarantee · 24/7 support.</div>
+</nav>
 
 <main>
   <!-- ================= STORE ================= -->
@@ -660,7 +690,7 @@ function placeOrder(){
 function myLibrary(){ return state.library.map((li,idx)=>({li,idx})).filter(x=> state.user && x.li.owner===state.user.email); }
 function renderLibrary(){
   const mine = state.user? myLibrary() : [];
-  $("#libN").textContent = mine.length? "("+mine.length+")":"";
+  const lb=$("#libN"); lb.textContent=mine.length; lb.style.display=mine.length? "":"none";
   $("#libGate").style.display = state.user? "none":"block";
   $("#libEmpty").style.display = (state.user && !mine.length)? "block":"none";
   $("#libList").innerHTML = mine.map(({li,idx})=>{ const p=byId(li.pid);
@@ -682,6 +712,7 @@ function pendingItems(){
 function renderAdmin(){
   const pend=pendingItems();
   $("#penN").textContent = pend.length? "("+pend.length+")":"";
+  const mpn=$("#menuPenN"); mpn.textContent=pend.length; mpn.style.display=pend.length? "":"none";
   // stats
   const revenue = state.orders.reduce((a,o)=>a+o.total,0);
   const keysInVault = PRODUCTS.filter(p=>p.mode==="auto").reduce((a,p)=>a+p.stock,0);
@@ -742,6 +773,18 @@ function renderAuth(){
   const chip=$("#userChip");
   if(u){ chip.style.display=""; chip.innerHTML='<span class="avatar">'+initials(u.name)+'</span> '+esc(u.name.split(" ")[0]); }
   else chip.style.display="none";
+  renderMenuUser();
+}
+function renderMenuUser(){
+  const mu=$("#menuUser"); if(!mu) return;
+  const u=state.user;
+  if(u){
+    mu.innerHTML='<div style="display:flex;gap:12px;align-items:center"><span class="avatar" style="width:42px;height:42px;font-size:16px">'+initials(u.name)+'</span><div style="min-width:0"><b style="display:block">'+esc(u.name)+'</b><span style="color:var(--ink3);font-size:12.5px;font-weight:600">'+esc(u.email)+'</span></div></div>';
+  } else {
+    mu.innerHTML='<b style="display:block;margin-bottom:4px">Welcome to KeyNest</b><span style="color:var(--ink2);font-size:13px">Sign in to see your library, orders and keys.</span><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-g btn-sm" id="menuSignin">Sign in</button><button class="btn btn-o btn-sm" id="menuJoin">Create account</button></div>';
+    $("#menuSignin").onclick=()=>{ closeMenu(); openAuth("signin"); };
+    $("#menuJoin").onclick=()=>{ closeMenu(); openAuth("signup"); };
+  }
 }
 function openAuth(mode, note){
   state.authMode = mode||"signin";
@@ -821,7 +864,7 @@ function renderAccount(){
 /* ============================== VIEW SWITCHING ============================== */
 function switchView(v){
   state.view=v;
-  document.querySelectorAll(".vtab").forEach(t=>t.classList.toggle("on", t.dataset.view===v));
+  document.querySelectorAll("[data-menu-view]").forEach(t=>t.classList.toggle("on", t.dataset.menuView===v));
   document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on", s.id==="view-"+v));
   if(v==="admin") renderAdmin();
   if(v==="library") renderLibrary();
@@ -847,7 +890,7 @@ document.addEventListener("click", e=>{
     if(q<=0) delete state.cart[id]; else if(p.mode==="auto"&&q>p.stock){ toast("Only "+p.stock+" keys in stock",true); } else state.cart[id]=q; renderCart(); }
   const rm=e.target.closest("[data-rm]"); if(rm){ delete state.cart[rm.dataset.rm]; renderCart(); }
   const cat=e.target.closest("[data-cat]"); if(cat){ state.cat=cat.dataset.cat; renderCats(); renderGrid(); }
-  const vt=e.target.closest(".vtab"); if(vt) switchView(vt.dataset.view);
+  const mv=e.target.closest("[data-menu-view]"); if(mv){ switchView(mv.dataset.menuView); closeMenu(); }
   const at=e.target.closest("[data-atab]"); if(at) switchATab(at.dataset.atab);
   const rev=e.target.closest("[data-reveal]"); if(rev){ const li=state.library[Number(rev.dataset.reveal)]; const code=document.querySelector('[data-key="'+rev.dataset.reveal+'"]'); const shown=code.textContent.includes("•"); code.textContent= shown? li.key : "•••••-•••••-•••••"; rev.textContent= shown? "Hide":"Reveal"; }
   const cp=e.target.closest("[data-copy]"); if(cp){ const li=state.library[Number(cp.dataset.copy)]; if(navigator.clipboard) navigator.clipboard.writeText(li.key); toast("Key copied — "+byId(li.pid).name); }
@@ -866,8 +909,18 @@ $("#authBtn").addEventListener("click", ()=>openAuth("signin"));
 $("#joinBtn").addEventListener("click", ()=>openAuth("signup"));
 $("#userChip").addEventListener("click", ()=>switchView("account"));
 $("#adminLink").addEventListener("click", ()=>switchView("admin"));
+/* slide-in menu */
+function openMenu(){ $("#menu").classList.add("on"); $("#menuScrim").classList.add("on"); $("#menuBtn").setAttribute("aria-expanded","true"); }
+function closeMenu(){ $("#menu").classList.remove("on"); $("#menuScrim").classList.remove("on"); $("#menuBtn").setAttribute("aria-expanded","false"); }
+$("#menuBtn").addEventListener("click", openMenu);
+$("#menuX").addEventListener("click", closeMenu);
+$("#menuScrim").addEventListener("click", closeMenu);
+$("#menuCur").addEventListener("click", ()=>$("#curBtn").click());
+$("#logoHome").addEventListener("click", ()=>{ closeMenu(); switchView("store"); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ closeMenu(); $("#drawer").classList.remove("on"); } });
+window.addEventListener("scroll", ()=>{ $("#topbar").classList.toggle("scrolled", window.scrollY>6); }, {passive:true});
 $("#drawerX").addEventListener("click", ()=>$("#drawer").classList.remove("on"));
-$("#curBtn").addEventListener("click", ()=>{ state.currency = state.currency==="USD"? "BDT":"USD"; $("#curBtn").textContent = state.currency==="USD"? "USD $":"BDT ৳"; renderGrid(); renderCart(); renderAdmin(); if(pdId && $("#pdScrim").classList.contains("on")) openProduct(pdId); });
+$("#curBtn").addEventListener("click", ()=>{ state.currency = state.currency==="USD"? "BDT":"USD"; $("#curBtn").textContent = state.currency==="USD"? "USD $":"BDT ৳"; const mc=$("#menuCur"); if(mc) mc.textContent = state.currency==="USD"? "USD $":"BDT ৳"; renderGrid(); renderCart(); renderAdmin(); if(pdId && $("#pdScrim").classList.contains("on")) openProduct(pdId); });
 $("#impBtn").addEventListener("click", importKeys);
 $("#heroBuy").addEventListener("click", ()=>{ addToCart("fc26",1); openCart(); });
 $("#heroView").addEventListener("click", ()=>openProduct("fc26"));
