@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" href="data:," />
+<title>KeyNest — Games, Gift Cards, Subscriptions &amp; Top-Ups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0f1115; --bg2:#12151c; --card:#171a21; --card2:#1c2029; --line:#262b36;
+    --ink:#eef1f6; --ink2:#a7b0c0; --ink3:#6b7484;
+    --green:#00c853; --green-d:#00a243; --green-soft:rgba(0,200,83,.12);
+    --amber:#ffb020; --amber-soft:rgba(255,176,32,.12);
+    --red:#ff5252; --red-soft:rgba(255,82,82,.12);
+    --blue:#3ea6ff; --blue-soft:rgba(62,166,255,.12);
+    --r:12px; --r-lg:16px;
+    --shadow:0 18px 50px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.disp{font-family:"Sora",sans-serif;margin:0}
+  button{font:inherit;cursor:pointer;color:inherit}
+  input,select,textarea{font:inherit;color:var(--ink)}
+  .mono{font-family:"JetBrains Mono",monospace}
+  a{color:var(--blue);text-decoration:none}
+  ::selection{background:var(--green);color:#04140a}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(15,17,21,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .hwrap{max-width:1240px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:9px;font-family:"Sora";font-weight:800;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
+  .logo .mark{width:32px;height:32px;border-radius:9px;background:var(--green);display:grid;place-items:center;color:#04140a}
+  .logo em{font-style:normal;color:var(--green)}
+  .search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
+  .search:focus-within{border-color:var(--green)}
+  .search input{flex:1;background:none;border:0;outline:0;min-width:0}
+  .search input::placeholder{color:var(--ink3)}
+  .hbtns{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .chipbtn{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+  .chipbtn:hover{border-color:var(--ink3)}
+  .chipbtn.on{border-color:var(--green);color:var(--green)}
+  .cartbtn{position:relative;padding-right:20px}
+  .cartn{position:absolute;top:-6px;right:-6px;background:var(--green);color:#04140a;font-size:11px;font-weight:800;min-width:19px;height:19px;border-radius:99px;display:grid;place-items:center;padding:0 5px}
+  .viewtabs{max-width:1240px;margin:0 auto;padding:0 16px 10px;display:flex;gap:6px}
+  .vtab{background:none;border:0;border-bottom:2px solid transparent;color:var(--ink2);font-weight:700;font-size:14px;padding:6px 10px}
+  .vtab.on{color:var(--ink);border-bottom-color:var(--green)}
+  .vtab .pendot{display:inline-block;background:var(--amber);color:#1a1200;font-size:11px;font-weight:800;border-radius:99px;padding:0 7px;margin-left:5px;vertical-align:2px}
+
+  main{max-width:1240px;margin:0 auto;padding:18px 16px 80px}
+  .view{display:none}
+  .view.on{display:block}
+
+  /* ---------- category chips ---------- */
+  .cats{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:none}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{white-space:nowrap;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:700;font-size:13.5px}
+  .cat.on{background:var(--green);border-color:var(--green);color:#04140a}
+  .cat .cnt{opacity:.65;font-weight:600;font-size:12px}
+
+  /* ---------- hero ---------- */
+  .hero{border-radius:var(--r-lg);overflow:hidden;display:grid;grid-template-columns:1.25fr .9fr;min-height:230px;border:1px solid var(--line);background:linear-gradient(115deg,#132a1b 0%,#0f1c26 55%,#171a21 100%);margin-bottom:26px}
+  .hero-in{padding:28px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+  .hero .kick{color:var(--green);font-weight:800;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+  .hero h1{font-size:clamp(26px,4vw,40px);line-height:1.08;letter-spacing:-.02em}
+  .hero p{color:var(--ink2);margin:0;max-width:44ch}
+  .hero .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:6px}
+  .hero .price{font-family:"Sora";font-size:30px;font-weight:800}
+  .hero .was{color:var(--ink3);text-decoration:line-through;font-size:17px}
+  .hero .off{background:var(--green);color:#04140a;font-weight:800;border-radius:8px;padding:3px 9px;font-size:14px}
+  .cd{display:flex;gap:6px;align-items:center}
+  .cd b{background:#000;border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-family:"JetBrains Mono";font-size:15px;min-width:44px;text-align:center}
+  .cd span{color:var(--ink3);font-size:11px;font-weight:700}
+  .hero-art{position:relative;min-height:180px}
+  .hero-art .tile{position:absolute;inset:0}
+
+  /* cover tiles (typographic artwork) */
+  .tile{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:#fff}
+  .tile::before{content:"";position:absolute;inset:0;background:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 14px),
+    radial-gradient(120% 90% at 85% 0%,rgba(255,255,255,.22),transparent 55%)}
+  .tile .glyph{position:absolute;top:6px;right:12px;font-family:"Sora";font-weight:800;font-size:74px;opacity:.22;line-height:1}
+  .tile .t-cat{position:relative;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+  .tile .t-name{position:relative;font-family:"Sora";font-weight:800;font-size:19px;line-height:1.15;letter-spacing:-.01em;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .tile.sm .t-name{font-size:15px}
+  .tile.sm .glyph{font-size:46px}
+
+  /* ---------- sections & grid ---------- */
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:26px 0 14px}
+  .sec-head h2{font-size:21px;letter-spacing:-.01em}
+  .sec-head .sub{color:var(--ink3);font-size:13px}
+  .sec-head .sp{flex:1}
+  select.sort{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-weight:600;font-size:13.5px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:16px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
+  .pcard:hover{transform:translateY(-3px);border-color:#39414f}
+  .pcard .cover{aspect-ratio:16/10.5;cursor:pointer}
+  .pcard .cover .tile{height:100%}
+  .badge-off{position:absolute;top:10px;left:10px;z-index:2;background:var(--green);color:#04140a;font-weight:800;font-size:13px;border-radius:8px;padding:3px 8px}
+  .badge-flash{position:absolute;top:10px;right:10px;z-index:2;background:var(--amber);color:#1a1200;font-weight:800;font-size:11.5px;border-radius:8px;padding:3px 8px}
+  .pbody{padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .ptitle{font-weight:700;font-size:15px;line-height:1.3;cursor:pointer}
+  .ptitle:hover{color:var(--green)}
+  .tags{display:flex;gap:5px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--ink2)}
+  .tag.inst{color:var(--green);border-color:rgba(0,200,83,.4);background:var(--green-soft)}
+  .tag.man{color:var(--amber);border-color:rgba(255,176,32,.4);background:var(--amber-soft)}
+  .meta{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:12.5px;font-weight:600}
+  .meta .star{color:var(--amber)}
+  .prow{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding-top:4px}
+  .price{font-family:"Sora";font-weight:800;font-size:19px}
+  .was{color:var(--ink3);text-decoration:line-through;font-size:13px;font-weight:600}
+  .stock{font-size:12px;font-weight:700}
+  .stock.ok{color:var(--green)} .stock.low{color:var(--amber)} .stock.out{color:var(--red)}
+  .btn{border:0;border-radius:10px;font-weight:800;padding:10px 16px;font-size:14px;display:inline-flex;align-items:center;gap:7px;justify-content:center}
+  .btn-g{background:var(--green);color:#04140a}
+  .btn-g:hover{background:var(--green-d)}
+  .btn-o{background:var(--card2);border:1px solid var(--line);color:var(--ink)}
+  .btn-o:hover{border-color:var(--ink3)}
+  .btn-sm{padding:8px 12px;font-size:13px;border-radius:9px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .oos{opacity:.55}
+  .empty{border:1px dashed var(--line);border-radius:var(--r-lg);padding:44px 20px;text-align:center;color:var(--ink2)}
+  .empty h3{margin-bottom:6px;color:var(--ink)}
+
+  /* trust strip */
+  .trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:34px}
+  .trust .t{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;gap:12px;align-items:flex-start}
+  .trust .ic{width:38px;height:38px;border-radius:10px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;flex:none}
+  .trust b{display:block;font-size:14.5px}
+  .trust span{color:var(--ink2);font-size:13px}
+
+  /* ---------- modal / drawer ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(4,6,9,.72);z-index:80;display:none;align-items:flex-end;justify-content:center}
+  .scrim.on{display:flex}
+  .sheet{background:var(--bg2);border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:760px;max-height:92dvh;overflow:auto;padding:22px;animation:up .22s ease}
+  @keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+  @media(min-width:720px){.scrim{align-items:center}.sheet{border-radius:20px}}
+  .sheet .x{float:right;background:var(--card);border:1px solid var(--line);width:34px;height:34px;border-radius:10px;font-size:16px}
+  .pd-grid{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:640px){.pd-grid{grid-template-columns:300px 1fr}}
+  .pd-cover{border-radius:var(--r);overflow:hidden;aspect-ratio:16/11}
+  .pd-cover .tile{height:100%}
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .qty button{background:var(--card);border:0;width:36px;height:38px;font-size:17px;font-weight:800}
+  .qty input{width:44px;text-align:center;background:none;border:0;outline:0;font-weight:800}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+  .fact{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px}
+  .fact b{display:block;font-size:13.5px}
+  .fact span{color:var(--ink3);font-size:12px;font-weight:600}
+
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100%);background:var(--bg2);border-left:1px solid var(--line);z-index:90;display:none;flex-direction:column;box-shadow:var(--shadow)}
+  .drawer.on{display:flex;animation:slidein .22s ease}
+  @keyframes slidein{from{transform:translateX(40px);opacity:.4}to{transform:none;opacity:1}}
+  .drawer header{position:static;background:none;border:0;padding:18px;display:flex;align-items:center;justify-content:space-between}
+  .ditems{flex:1;overflow:auto;padding:0 18px;display:flex;flex-direction:column;gap:12px}
+  .ditem{display:flex;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px}
+  .ditem .thumb{width:64px;height:52px;border-radius:8px;overflow:hidden;flex:none}
+  .ditem .thumb .tile{height:100%;padding:6px}
+  .dfoot{padding:16px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+  .sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--ink2);font-weight:600}
+  .sumrow.total{color:var(--ink);font-size:17px;font-weight:800;border-top:1px dashed var(--line);padding-top:10px}
+  .promo{display:flex;gap:8px}
+  .promo input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;outline:0;min-width:0}
+  .paym{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .paym button{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 6px;font-weight:800;font-size:13px}
+  .paym button.on{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+  .spin{width:44px;height:44px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--green);animation:sp 0.8s linear infinite;margin:26px auto}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  /* ---------- library ---------- */
+  .lib-item{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .lib-item .thumb{width:92px;height:64px;border-radius:10px;overflow:hidden;flex:none}
+  .lib-item .thumb .tile{height:100%;padding:8px}
+  .keybox{display:flex;gap:8px;align-items:center;background:#0a0c10;border:1px solid var(--line);border-radius:10px;padding:9px 12px;flex:1;min-width:230px}
+  .keybox code{font-family:"JetBrains Mono";font-size:14.5px;font-weight:700;letter-spacing:.04em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pill{font-size:11.5px;font-weight:800;border-radius:99px;padding:3px 10px}
+  .pill.ok{background:var(--green-soft);color:var(--green)}
+  .pill.wait{background:var(--amber-soft);color:var(--amber)}
+
+  /* ---------- admin ---------- */
+  .atabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+  .atab{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-weight:700;font-size:13.5px}
+  .atab.on{background:var(--ink);color:#0c0e12;border-color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+  .stat .k{color:var(--ink3);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .stat .v{font-family:"Sora";font-size:26px;font-weight:800;margin-top:4px}
+  .stat .d{font-size:12.5px;font-weight:700;margin-top:2px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;margin-bottom:18px}
+  .panel h3{font-size:16.5px;margin-bottom:4px}
+  .panel .hint{color:var(--ink2);font-size:13px;margin:0 0 14px}
+  .tblwrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+  th{text-align:left;color:var(--ink3);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  .alert{display:flex;gap:10px;align-items:flex-start;background:var(--amber-soft);border:1px solid rgba(255,176,32,.35);border-radius:10px;padding:11px 13px;font-size:13.5px;margin-bottom:8px}
+  textarea.keys{width:100%;background:#0a0c10;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:"JetBrains Mono";font-size:13px;min-height:110px;outline:0;resize:vertical}
+  textarea.keys:focus{border-color:var(--green)}
+  .frow{display:flex;gap:10px;flex-wrap:wrap}
+  .frow select,.frow input[type=text]{background:#0a0c10;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:0}
+  .fulfil{display:flex;gap:8px;flex-wrap:wrap}
+  .fulfil input{flex:1;min-width:200px;background:#0a0c10;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-family:"JetBrains Mono";font-size:13px;outline:0}
+
+  /* ---------- account / auth ---------- */
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--green);color:#04140a;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+  .avatar.lg{width:64px;height:64px;font-size:26px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:6px}
+  .field input,.field select{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:0}
+  .field input:focus,.field select:focus{border-color:var(--green)}
+  .authtabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:18px}
+  .authtabs button{flex:1;background:none;border:0;border-radius:9px;padding:9px;font-weight:800;font-size:14px;color:var(--ink2)}
+  .authtabs button.on{background:var(--green);color:#04140a}
+  .gate{border:1px dashed var(--line);border-radius:var(--r-lg);padding:40px 22px;text-align:center;color:var(--ink2)}
+  .gate h3{color:var(--ink);margin-bottom:6px}
+  .prof{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:760px){.prof{grid-template-columns:320px 1fr}}
+  .ordrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;margin-bottom:10px;font-size:14px}
+  .linklike{background:none;border:0;color:var(--ink3);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:0}
+  .linklike:hover{color:var(--ink)}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,80px);background:#e8fcec;color:#06280f;font-weight:800;font-size:14px;border-radius:12px;padding:12px 18px;z-index:200;transition:transform .25s ease;box-shadow:var(--shadow);max-width:92vw;text-align:center}
+  .toast.on{transform:translate(-50%,0)}
+  .toast.err{background:#ffe9e9;color:#4d0d0d}
+  .proto-banner{background:var(--amber);color:#1a1200;text-align:center;font-size:13px;font-weight:700;line-height:1.45;padding:8px 16px}
+  .proto-banner strong{font-weight:800}
+  footer{border-top:1px solid var(--line);margin-top:50px}
+  .fwrap{max-width:1240px;margin:0 auto;padding:26px 16px;color:var(--ink3);font-size:13px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+  .proto-note{max-width:1240px;margin:0 auto;padding:0 16px 22px;color:var(--ink2);font-size:13px;font-weight:600;text-align:center}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="proto-banner" role="note"><strong>Prototype demo</strong> — sample products and sample data only. Checkout is a demo: no real payment is taken.</div>
+
+<header>
+  <div class="hwrap">
+    <div class="logo"><span class="mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L19 3m-4 1 3 3"/></svg></span>Key<em>Nest</em></div>
+    <label class="search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Search games, gift cards, subscriptions…" autocomplete="off" />
+    </label>
+    <div class="hbtns">
+      <button class="chipbtn" id="curBtn" title="Toggle currency">USD $</button>
+      <button class="chipbtn" id="authBtn">Sign in</button>
+      <button class="btn btn-g btn-sm" id="joinBtn">Create account</button>
+      <button class="chipbtn" id="userChip" style="display:none"></button>
+      <button class="chipbtn cartbtn" id="cartBtn">Cart <span class="cartn" id="cartN">0</span></button>
+    </div>
+  </div>
+  <nav class="viewtabs" aria-label="Views">
+    <button class="vtab on" data-view="store">Store</button>
+    <button class="vtab" data-view="library">My Library <span id="libN"></span></button>
+    <button class="vtab" data-view="account">My Account</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ================= STORE ================= -->
+  <section class="view on" id="view-store">
+    <div class="hero">
+      <div class="hero-in">
+        <div class="kick">Flash Sale · Ends in</div>
+        <h1>EA FC 26 — almost half price</h1>
+        <p>The full football season, one key. Global region, activates anywhere including Bangladesh.</p>
+        <div class="row">
+          <span class="price" data-usd="36.99">$36.99</span><span class="was" data-usd="69.99">$69.99</span><span class="off">−47%</span>
+          <div class="cd" aria-label="Flash sale countdown"><b id="cdH">04</b><span>HRS</span><b id="cdM">12</b><span>MIN</span><b id="cdS">33</b><span>SEC</span></div>
+        </div>
+        <div class="row"><button class="btn btn-g" id="heroBuy">Buy Now</button><button class="btn btn-o" id="heroView">View product</button></div>
+      </div>
+      <div class="hero-art" id="heroArt"></div>
+    </div>
+
+    <div class="cats" id="cats" role="tablist" aria-label="Categories"></div>
+
+    <div class="sec-head">
+      <h2 id="gridTitle">All products</h2><span class="sub" id="gridCount"></span>
+      <span class="sp"></span>
+      <select class="sort" id="sort" aria-label="Sort products">
+        <option value="deal">Best deal</option>
+        <option value="priceAsc">Price: low → high</option>
+        <option value="priceDesc">Price: high → low</option>
+        <option value="rating">Top rated</option>
+        <option value="sold">Best selling</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="gridEmpty" style="display:none"><h3>No matches</h3>Try a different search term or category.</div>
+
+    <div class="trust">
+      <div class="t"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><div><b>Instant delivery</b><span>Auto-stocked keys arrive in your Library in under 30 seconds.</span></div></div>
+      <div class="t"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div><b>Secure payment</b><span>bKash, Nagad, cards via SSLCommerz &amp; Paddle. Keys release only after payment confirms.</span></div></div>
+      <div class="t"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></div><div><b>Bad-key guarantee</b><span>Report within 14 days — instant replacement from stock or a refund.</span></div></div>
+      <div class="t"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 20l1-5.2a8.4 8.4 0 1 1 17-3.3z"/></svg></div><div><b>24/7 support</b><span>Real humans on chat — in English and Bangla.</span></div></div>
+    </div>
+  </section>
+
+  <!-- ================= LIBRARY ================= -->
+  <section class="view" id="view-library">
+    <div class="sec-head"><h2>My Library</h2><span class="sub">Your purchased keys &amp; delivery status</span></div>
+    <div class="gate" id="libGate" style="display:none"><h3>Sign in to see your library</h3>Your keys are tied to your account. Sign in or create a free account to view your purchases and reveal your keys.<div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-g" data-auth="signin">Sign in</button><button class="btn btn-o" data-auth="signup">Create account</button></div></div>
+    <div id="libList"></div>
+    <div class="empty" id="libEmpty"><h3>Nothing here yet</h3>Keys you buy appear here the moment payment confirms. Items marked manual delivery show as pending until they are delivered to your account.</div>
+  </section>
+
+  <!-- ================= ACCOUNT ================= -->
+  <section class="view" id="view-account">
+    <div class="sec-head"><h2>My Account</h2><span class="sub">Profile, orders and account settings</span></div>
+    <div class="gate" id="accGate">
+      <h3>You're not signed in</h3>
+      Create a free account to buy products, get your keys delivered to your library the moment you pay, and track every order in one place.
+      <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-g" data-auth="signup">Create free account</button><button class="btn btn-o" data-auth="signin">Sign in</button></div>
+    </div>
+    <div id="accBody" style="display:none"></div>
+  </section>
+
+  <!-- ================= ADMIN ================= -->
+  <section class="view" id="view-admin">
+    <div class="sec-head"><h2>Admin Panel</h2><span class="sub">Orders, key stock and deliveries</span></div>
+    <div class="atabs" id="atabs">
+      <button class="atab on" data-atab="dash">Dashboard</button>
+      <button class="atab" data-atab="stock">Key Stock</button>
+      <button class="atab" data-atab="pending">Pending Delivery <span id="penN"></span></button>
+      <button class="atab" data-atab="orders">Orders</button>
+      <button class="atab" data-atab="products">Products</button>
+    </div>
+
+    <div class="apane on" id="apane-dash">
+      <div class="stats" id="stats"></div>
+      <div class="panel"><h3>Low-stock alerts</h3><p class="hint">Auto-delivery products at 5 keys or fewer. Import more keys before they sell out.</p><div id="alerts"></div></div>
+      <div class="panel"><h3>Recent orders</h3><p class="hint">Latest activity across the store.</p><div class="tblwrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody id="dashOrders"></tbody></table></div></div>
+    </div>
+
+    <div class="apane" id="apane-stock" style="display:none">
+      <div class="panel">
+        <h3>Import keys</h3>
+        <p class="hint">Paste keys from a supplier, one per line. Duplicates already in stock are rejected automatically, and every import is logged as a supplier batch.</p>
+        <div class="frow" style="margin-bottom:10px">
+          <select id="impProduct" aria-label="Product"></select>
+          <input type="text" id="impSupplier" placeholder="Supplier (e.g. Trader — Telegram)" style="flex:1;min-width:180px" />
+          <input type="text" id="impCost" placeholder="Cost / key (USD)" style="width:150px" />
+        </div>
+        <textarea class="keys" id="impKeys" placeholder="XXXXX-XXXXX-XXXXX&#10;XXXXX-XXXXX-XXXXX&#10;XXXXX-XXXXX-XXXXX"></textarea>
+        <div class="frow" style="margin-top:12px"><button class="btn btn-g" id="impBtn">Import into vault</button><span class="sub" id="impMsg" style="align-self:center;color:var(--ink2);font-size:13px"></span></div>
+      </div>
+      <div class="panel"><h3>Vault overview</h3><p class="hint">Available keys per product. Sold keys are never shown in plain text here.</p><div class="tblwrap"><table><thead><tr><th>Product</th><th>Mode</th><th>Available</th><th>Sold</th><th>Status</th></tr></thead><tbody id="vaultTbl"></tbody></table></div></div>
+      <div class="panel"><h3>Supplier batches</h3><p class="hint">Every manual purchase from a supplier, logged.</p><div class="tblwrap"><table><thead><tr><th>Batch</th><th>Product</th><th>Supplier</th><th>Keys</th><th>Cost / key</th><th>Imported</th></tr></thead><tbody id="batchTbl"></tbody></table></div></div>
+    </div>
+
+    <div class="apane" id="apane-pending" style="display:none">
+      <div class="panel">
+        <h3>Pending delivery queue</h3>
+        <p class="hint">Orders waiting for a key. Paste the code from your supplier and press Deliver — it appears in the customer's library right away.</p>
+        <div id="pendList"></div>
+        <div class="empty" id="pendEmpty"><h3>Queue is clear</h3>No orders are waiting for manual delivery.</div>
+      </div>
+    </div>
+
+    <div class="apane" id="apane-orders" style="display:none">
+      <div class="panel"><h3>All orders</h3><p class="hint">Every order placed on the store, with payment and delivery status.</p><div class="tblwrap"><table><thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody id="ordTbl"></tbody></table></div></div>
+    </div>
+
+    <div class="apane" id="apane-products" style="display:none">
+      <div class="panel"><h3>Products</h3><p class="hint">Delivery mode is set per product: <b>Auto</b> = instant from key stock, <b>Manual</b> = fulfil from the pending queue.</p><div class="tblwrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Delivery mode</th></tr></thead><tbody id="prodTbl"></tbody></table></div></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="fwrap"><span>KeyNest — game keys, gift cards, subscriptions and top-ups with instant delivery.</span><span>Refund policy · Terms · Privacy · Contact · <button class="linklike" id="adminLink">Admin panel</button></span></div><p class="proto-note">Prototype demo — sample products and sample data only. Checkout is a demo and no real payment is taken.</p></footer>
+
+<!-- product sheet -->
+<div class="scrim" id="pdScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Product details">
+  <button class="x" data-close="pdScrim" aria-label="Close">✕</button>
+  <div id="pdBody"></div>
+</div></div>
+
+<!-- checkout sheet -->
+<div class="scrim" id="coScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Checkout" style="max-width:520px">
+  <button class="x" data-close="coScrim" aria-label="Close">✕</button>
+  <div id="coBody"></div>
+</div></div>
+
+<!-- auth sheet -->
+<div class="scrim" id="authScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Account" style="max-width:440px">
+  <button class="x" data-close="authScrim" aria-label="Close">✕</button>
+  <div id="authBody"></div>
+</div></div>
+
+<!-- cart drawer -->
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <header><h3 style="font-size:18px">Your cart</h3><button class="x chipbtn" id="drawerX" aria-label="Close cart">✕</button></header>
+  <div class="ditems" id="ditems"></div>
+  <div class="dfoot" id="dfoot"></div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* ============================== DATA ============================== */
+const RATE = 120; // BDT per USD (display only)
+const HUES = {a:["#7a1f2b","#c2410c"],b:["#14532d","#0e7490"],c:["#1e3a8a","#6d28d9"],d:["#7c2d12","#b45309"],e:["#134e4a","#166534"],f:["#831843","#9d174d"],g:["#312e81","#0369a1"],h:["#3f3f46","#991b1b"]};
+const PRODUCTS = [
+ {id:"elden", name:"Elden Ring", sub:"PC · Steam Key", cat:"Games", platform:"Steam", region:"Global", price:23.99, mrp:59.99, rating:4.8, rc:2314, sold:10400, stock:47, mode:"auto", hue:"a", glyph:"ER", flash:false, about:"Explore the Lands Between in FromSoftware's open-world action RPG. One key, yours forever — no subscription."},
+ {id:"fc26", name:"EA FC 26", sub:"PC · EA App Key", cat:"Games", platform:"EA App", region:"Global", price:36.99, mrp:69.99, rating:4.6, rc:1893, sold:8200, stock:23, mode:"auto", hue:"b", glyph:"FC", flash:true, about:"The 2026 season with updated squads, Ultimate Team and full career mode. Global key — activates in Bangladesh."},
+ {id:"bg3", name:"Baldur's Gate 3", sub:"PC · Steam Key", cat:"Games", platform:"Steam", region:"Global", price:35.99, mrp:59.99, rating:4.9, rc:3120, sold:6800, stock:12, mode:"auto", hue:"c", glyph:"BG", flash:false, about:"Larian's award-winning story-driven RPG. Gather your party and return to the Forgotten Realms."},
+ {id:"rdr2", name:"Red Dead Redemption 2", sub:"PC · Steam Key", cat:"Games", platform:"Steam", region:"Global", price:19.79, mrp:59.99, rating:4.9, rc:4210, sold:15200, stock:5, mode:"auto", hue:"h", glyph:"RD", flash:true, about:"Rockstar's epic outlaw saga. Winner of over 175 Game of the Year awards."},
+ {id:"mc", name:"Minecraft: Java & Bedrock", sub:"PC · Microsoft Key", cat:"Games", platform:"Microsoft", region:"Global", price:21.49, mrp:29.99, rating:4.9, rc:5102, sold:21000, stock:64, mode:"auto", hue:"e", glyph:"MC", flash:false, about:"Both editions in one key. Build, survive and play with friends on any server."},
+ {id:"steam20", name:"Steam Wallet $20", sub:"Gift Card · USD", cat:"Gift Cards", platform:"Steam", region:"Global", price:18.49, mrp:20.00, rating:4.9, rc:1876, sold:19800, stock:120, mode:"auto", hue:"g", glyph:"$20", flash:false, about:"Top up any Steam account. Code delivered instantly, redeemable worldwide."},
+ {id:"psn50", name:"PlayStation Store $50", sub:"Gift Card · US account", cat:"Gift Cards", platform:"PlayStation", region:"US", price:46.99, mrp:50.00, rating:4.7, rc:932, sold:5400, stock:18, mode:"auto", hue:"c", glyph:"$50", flash:false, about:"For US PSN accounts. Buy games, add-ons and PlayStation Plus time."},
+ {id:"amz10", name:"Amazon Gift Card $10", sub:"Gift Card · US", cat:"Gift Cards", platform:"Amazon", region:"US", price:9.79, mrp:10.00, rating:4.6, rc:640, sold:3900, stock:0, mode:"manual", hue:"d", glyph:"$10", flash:false, about:"US Amazon balance. Supplied to order — delivered within 30 min – 6 hours."},
+ {id:"apple15", name:"Apple Gift Card $15", sub:"Gift Card · US", cat:"Gift Cards", platform:"Apple", region:"US", price:14.59, mrp:15.00, rating:4.7, rc:512, sold:2800, stock:9, mode:"manual", hue:"f", glyph:"$15", flash:false, about:"Apps, games, iCloud+ and more on a US Apple ID. Delivered within 30 min – 6 hours."},
+ {id:"gpu", name:"Xbox Game Pass Ultimate", sub:"1 Month · Subscription", cat:"Subscriptions", platform:"Xbox", region:"Global", price:12.99, mrp:19.99, rating:4.8, rc:1440, sold:9700, stock:31, mode:"auto", hue:"e", glyph:"GP", flash:true, about:"Console + PC Game Pass, EA Play and cloud gaming for one month. Stackable up to 36 months."},
+ {id:"nfx", name:"Netflix Gift Card $25", sub:"Gift Card · US", cat:"Subscriptions", platform:"Netflix", region:"US", price:24.25, mrp:25.00, rating:4.5, rc:388, sold:1600, stock:0, mode:"manual", hue:"h", glyph:"NF", flash:false, about:"Official gift card — redeem on your own Netflix account. No shared accounts, ever. Delivered in 30 min – 6 hours."},
+ {id:"spot", name:"Spotify Premium Gift Card", sub:"3 Months · US", cat:"Subscriptions", platform:"Spotify", region:"US", price:32.99, mrp:35.97, rating:4.6, rc:455, sold:2100, stock:7, mode:"manual", hue:"b", glyph:"SP", flash:false, about:"Official 3-month Premium card for your own account. Delivered within 30 min – 6 hours."},
+ {id:"pubg", name:"PUBG Mobile 660 UC", sub:"Top-Up · Player ID", cat:"Top-Up", platform:"PUBG Mobile", region:"Global", price:8.99, mrp:9.99, rating:4.7, rc:1120, sold:12400, stock:0, mode:"manual", hue:"d", glyph:"UC", flash:false, about:"Official top-up by Player ID — no login needed. Completed within 15 min – 2 hours."},
+ {id:"win11", name:"Windows 11 Pro", sub:"OEM Key · Software", cat:"Software", platform:"Microsoft", region:"Global", price:14.99, mrp:199.99, rating:4.5, rc:860, sold:7300, stock:42, mode:"auto", hue:"g", glyph:"W11", flash:false, about:"Genuine OEM activation key for one PC. Lifetime activation, delivered instantly."}
+];
+const CATS = ["All","Games","Gift Cards","Subscriptions","Top-Up","Software"];
+
+/* ============================== STATE ============================== */
+let state = {
+  view:"store", cat:"All", q:"", sort:"deal", currency:"USD",
+  cart:{}, promo:0, promoCode:"",
+  orders:[], library:[], batches:[], batchSeq:104,
+  orderSeq:1042, atab:"dash", seed:7,
+  user:null, accounts:{}, pendingCheckout:false, authMode:"signup"
+};
+PRODUCTS.forEach(p=>{ p.pool=[]; p.soldKeys=0; });
+// seed vault pools for auto products
+PRODUCTS.filter(p=>p.mode==="auto").forEach(p=>{ for(let i=0;i<Math.min(p.stock,6);i++) p.pool.push(genKey()); });
+seedDemo();
+
+function seedDemo(){
+  state.accounts = { "demo@keynest.com": {name:"Arif Rahman", email:"demo@keynest.com", pass:"demo1234", since:"Oct 2026"} };
+  state.batches = [
+    {id:"B-101", pid:"elden", supplier:"Wholesale trader — Telegram", n:50, cost:19.40, when:"21 Oct 2026"},
+    {id:"B-102", pid:"steam20", supplier:"Giftoro (bulk file)", n:120, cost:17.85, when:"22 Oct 2026"},
+    {id:"B-103", pid:"gpu", supplier:"Kinguin wholesale", n:40, cost:10.90, when:"22 Oct 2026"}
+  ];
+  state.orders = [
+    {id:"KN-1039", when:"Today, 11:42", customer:"rahim.uddin@gmail.com", items:[{pid:"steam20",qty:1,price:18.49}], total:18.49, pay:"bKash", status:"Delivered"},
+    {id:"KN-1040", when:"Today, 12:15", customer:"demo@keynest.com", items:[{pid:"pubg",qty:2,price:8.99}], total:17.98, pay:"Nagad", status:"Pending delivery"},
+    {id:"KN-1041", when:"Today, 13:03", customer:"demo@keynest.com", items:[{pid:"gpu",qty:1,price:12.99},{pid:"mc",qty:1,price:21.49}], total:34.48, pay:"Card · Paddle", status:"Delivered"}
+  ];
+  state.library = [
+    {oid:"KN-1041", pid:"gpu", key:"XBOX-GP7K2-99QMD-ZX41A", status:"delivered", when:"Today, 13:03", owner:"demo@keynest.com"},
+    {oid:"KN-1040", pid:"pubg", key:null, status:"pending", when:"Today, 12:15", owner:"demo@keynest.com"}
+  ];
+}
+
+/* ============================== HELPERS ============================== */
+const $ = s=>document.querySelector(s);
+const byId = id=>PRODUCTS.find(p=>p.id===id);
+function money(usd){ return state.currency==="USD" ? "$"+usd.toFixed(2) : "৳"+Math.round(usd*RATE).toLocaleString("en-IN"); }
+function offPct(p){ return Math.round((1-p.price/p.mrp)*100); }
+function stockLabel(p){
+  if(p.mode==="manual") return '<span class="stock low">Supplied to order</span>';
+  if(p.stock<=0) return '<span class="stock out">Out of stock</span>';
+  if(p.stock<=5) return '<span class="stock low">Only '+p.stock+' left</span>';
+  return '<span class="stock ok">In stock · '+p.stock+' keys</span>';
+}
+function tileHTML(p, sm){
+  const h = HUES[p.hue];
+  return '<div class="tile'+(sm?" sm":"")+'" style="background:linear-gradient(140deg,'+h[0]+','+h[1]+')"><span class="glyph">'+p.glyph+'</span><span class="t-cat">'+p.platform+" · "+p.region+'</span><span class="t-name">'+p.name+'</span></div>';
+}
+function toast(msg, err){
+  const t=$("#toast"); t.textContent=msg; t.className="toast on"+(err?" err":"");
+  clearTimeout(t._h); t._h=setTimeout(()=>t.className="toast",2600);
+}
+// deterministic-ish demo key generator
+function genKey(){
+  const cs="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let out="";
+  state.seed = (state.seed*9301+49297)%233280; 
+  for(let g=0;g<3;g++){ for(let i=0;i<5;i++){ state.seed=(state.seed*9301+49297)%233280; out+=cs[Math.floor(state.seed/233280*cs.length)]; } if(g<2) out+="-"; }
+  return out;
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+/* ============================== STORE ============================== */
+function renderCats(){
+  $("#cats").innerHTML = CATS.map(c=>{
+    const n = c==="All" ? PRODUCTS.length : PRODUCTS.filter(p=>p.cat===c).length;
+    return '<button class="cat'+(state.cat===c?" on":"")+'" data-cat="'+c+'">'+c+' <span class="cnt">'+n+'</span></button>';
+  }).join("");
+}
+function visibleProducts(){
+  let list = PRODUCTS.filter(p=>
+    (state.cat==="All"||p.cat===state.cat) &&
+    (p.name+" "+p.sub+" "+p.platform).toLowerCase().includes(state.q.toLowerCase())
+  );
+  const s=state.sort;
+  list.sort((a,b)=> s==="priceAsc"?a.price-b.price : s==="priceDesc"?b.price-a.price : s==="rating"?b.rating-a.rating : s==="sold"?b.sold-a.sold : offPct(b)-offPct(a));
+  return list;
+}
+function cardHTML(p){
+  const oos = p.mode==="auto" && p.stock<=0;
+  return '<article class="pcard'+(oos?" oos":"")+'">'
+    + '<div class="cover" data-open="'+p.id+'" style="position:relative"><span class="badge-off">−'+offPct(p)+'%</span>'
+    + (p.flash?'<span class="badge-flash">FLASH DEAL</span>':"") + tileHTML(p) + '</div>'
+    + '<div class="pbody"><div class="ptitle" data-open="'+p.id+'">'+esc(p.name)+'</div>'
+    + '<div class="tags"><span class="tag">'+p.platform+'</span><span class="tag">'+p.region+'</span>'
+    + (p.mode==="auto"?'<span class="tag inst">⚡ Instant</span>':'<span class="tag man">Manual · 30m–6h</span>')+'</div>'
+    + '<div class="meta"><span class="star">★ '+p.rating+'</span><span>'+p.rc.toLocaleString()+' reviews</span><span>'+ (p.sold/1000).toFixed(1) +'k sold</span></div>'
+    + '<div class="prow"><div><div class="price">'+money(p.price)+'</div><div class="was">'+money(p.mrp)+'</div></div><div style="text-align:right">'+stockLabel(p)
+    + '<div style="margin-top:6px"><button class="btn btn-g btn-sm" data-add="'+p.id+'" '+(oos?"disabled":"")+'>'+(oos?"Notify me":"Add to cart")+'</button></div></div></div>'
+    + '</div></article>';
+}
+function renderGrid(){
+  const list = visibleProducts();
+  $("#grid").innerHTML = list.map(cardHTML).join("");
+  $("#gridEmpty").style.display = list.length? "none":"block";
+  $("#gridTitle").textContent = state.q ? 'Results for “'+state.q+'”' : (state.cat==="All"?"All products":state.cat);
+  $("#gridCount").textContent = list.length+" products";
+}
+
+/* product sheet */
+let pdQty = 1, pdId = null;
+function openProduct(id){
+  const p = byId(id); pdId=id; pdQty=1;
+  const oos = p.mode==="auto" && p.stock<=0;
+  $("#pdBody").innerHTML =
+    '<div class="pd-grid"><div class="pd-cover" style="position:relative"><span class="badge-off">−'+offPct(p)+'%</span>'+tileHTML(p)+'</div>'
+    + '<div><h2 style="font-size:23px;line-height:1.2">'+esc(p.name)+'</h2>'
+    + '<div style="color:var(--ink2);font-weight:600;margin-top:3px">'+esc(p.sub)+'</div>'
+    + '<div class="meta" style="margin-top:8px"><span class="star">★ '+p.rating+'</span><span>'+p.rc.toLocaleString()+' reviews</span><span>'+p.sold.toLocaleString()+' sold</span></div>'
+    + '<div style="display:flex;align-items:baseline;gap:10px;margin-top:14px"><span class="price" style="font-size:30px">'+money(p.price)+'</span><span class="was" style="font-size:16px">'+money(p.mrp)+'</span><span class="off" style="background:var(--green);color:#04140a;font-weight:800;border-radius:8px;padding:3px 9px">−'+offPct(p)+'%</span></div>'
+    + '<div style="margin-top:6px">'+stockLabel(p)+'</div>'
+    + '<div class="facts">'
+    + '<div class="fact"><span>Region</span><b>'+p.region+' — activates in Bangladesh</b></div>'
+    + '<div class="fact"><span>Platform</span><b>'+p.platform+'</b></div>'
+    + '<div class="fact"><span>Delivery</span><b>'+(p.mode==="auto"?"⚡ Instant — under 30 seconds":"Manual — 30 min to 6 hours")+'</b></div>'
+    + '<div class="fact"><span>Guarantee</span><b>14-day bad-key replacement</b></div></div>'
+    + '<p style="color:var(--ink2);margin:0 0 16px">'+esc(p.about)+'</p>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><span class="qty"><button id="qMinus" aria-label="Decrease quantity">−</button><input id="qVal" value="1" readonly aria-label="Quantity"/><button id="qPlus" aria-label="Increase quantity">+</button></span>'
+    + '<button class="btn btn-o" id="pdAdd" '+(oos?"disabled":"")+'>Add to cart</button>'
+    + '<button class="btn btn-g" id="pdBuy" '+(oos?"disabled":"")+'>Buy now</button></div>'
+    + '</div></div>';
+  $("#pdScrim").classList.add("on");
+  $("#qMinus").onclick=()=>{ pdQty=Math.max(1,pdQty-1); $("#qVal").value=pdQty; };
+  $("#qPlus").onclick=()=>{ pdQty=Math.min(10,pdQty+1); $("#qVal").value=pdQty; };
+  $("#pdAdd").onclick=()=>{ addToCart(pdId,pdQty); $("#pdScrim").classList.remove("on"); };
+  $("#pdBuy").onclick=()=>{ addToCart(pdId,pdQty); $("#pdScrim").classList.remove("on"); openCart(); };
+}
+
+/* ============================== CART ============================== */
+function cartCount(){ return Object.values(state.cart).reduce((a,b)=>a+b,0); }
+function cartTotal(){ return Object.entries(state.cart).reduce((a,[id,q])=>a+byId(id).price*q,0); }
+function addToCart(id,q){
+  const p=byId(id);
+  if(p.mode==="auto" && (state.cart[id]||0)+q > p.stock){ toast("Only "+p.stock+" keys in stock for "+p.name, true); return; }
+  state.cart[id]=(state.cart[id]||0)+q; renderCart(); toast("Added — "+p.name);
+}
+function renderCart(){
+  $("#cartN").textContent = cartCount();
+  const box=$("#ditems");
+  const ids=Object.keys(state.cart);
+  if(!ids.length){
+    box.innerHTML='<div class="empty"><h3>Cart is empty</h3>Add a game, gift card or top-up to get started.</div>';
+    $("#dfoot").innerHTML=""; return;
+  }
+  box.innerHTML = ids.map(id=>{ const p=byId(id), q=state.cart[id];
+    return '<div class="ditem"><div class="thumb">'+tileHTML(p,true)+'</div>'
+    + '<div style="flex:1;min-width:0"><b style="font-size:14px">'+esc(p.name)+'</b><div style="color:var(--ink3);font-size:12px;font-weight:600">'+p.platform+" · "+p.region+" · "+(p.mode==="auto"?"Instant":"Manual")+'</div>'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="qty"><button data-cq="'+id+'|-1">−</button><input value="'+q+'" readonly/><button data-cq="'+id+'|1">+</button></span>'
+    + '<b>'+money(p.price*q)+'</b></div></div>'
+    + '<button class="chipbtn" data-rm="'+id+'" aria-label="Remove" style="align-self:flex-start;padding:4px 9px">✕</button></div>';
+  }).join("");
+  const sub=cartTotal(), disc=sub*state.promo;
+  $("#dfoot").innerHTML =
+    '<div class="promo"><input id="promoIn" placeholder="Promo code (try WELCOME10)" value="'+esc(state.promoCode)+'"/><button class="btn btn-o btn-sm" id="promoBtn">Apply</button></div>'
+    + '<div class="sumrow"><span>Subtotal</span><span>'+money(sub)+'</span></div>'
+    + (state.promo? '<div class="sumrow" style="color:var(--green)"><span>Promo '+esc(state.promoCode)+'</span><span>−'+money(disc)+'</span></div>':"")
+    + '<div class="sumrow"><span>Processing fee</span><span>$0.00</span></div>'
+    + '<div class="sumrow total"><span>Total</span><span>'+money(sub-disc)+'</span></div>'
+    + '<button class="btn btn-g" id="checkoutBtn" style="width:100%">Checkout</button>'
+    + '<div style="text-align:center;color:var(--ink3);font-size:12px;font-weight:600">Keys release only after payment confirms</div>';
+  $("#promoBtn").onclick=()=>{
+    const v=$("#promoIn").value.trim().toUpperCase();
+    if(v==="WELCOME10"){ state.promo=0.10; state.promoCode=v; toast("Promo applied — 10% off"); }
+    else { state.promo=0; state.promoCode=""; toast("Invalid promo code", true); }
+    renderCart();
+  };
+  $("#checkoutBtn").onclick=()=>{
+    if(!state.user){ state.pendingCheckout=true; $("#drawer").classList.remove("on"); openAuth("signup", "Create a free account or sign in to complete your purchase — your keys are delivered straight to your library."); return; }
+    openCheckout();
+  };
+}
+function openCart(){ renderCart(); $("#drawer").classList.add("on"); }
+
+/* ============================== CHECKOUT ============================== */
+let payMethod="bKash";
+function openCheckout(){
+  $("#drawer").classList.remove("on");
+  const sub=cartTotal(), disc=sub*state.promo;
+  const rows=Object.entries(state.cart).map(([id,q])=>{ const p=byId(id);
+    return '<div class="sumrow"><span>'+esc(p.name)+" × "+q+'</span><span>'+money(p.price*q)+'</span></div>'; }).join("");
+  $("#coBody").innerHTML =
+    '<h3 style="font-size:19px;margin-bottom:12px">Checkout</h3>'+rows
+    + (state.promo? '<div class="sumrow" style="color:var(--green)"><span>Promo</span><span>−'+money(disc)+'</span></div>':"")
+    + '<div class="sumrow total"><span>Total</span><span>'+money(sub-disc)+'</span></div>'
+    + '<p style="color:var(--ink2);font-size:13px;margin:16px 0 8px;font-weight:700">Payment method</p>'
+    + '<div class="paym" id="paym">'
+    + '<button data-pay="bKash" class="on">bKash</button><button data-pay="Nagad">Nagad</button><button data-pay="Card · Paddle">Card</button></div>'
+    + '<div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin-top:14px;font-size:13.5px;color:var(--ink2)">Delivering to <b style="color:var(--ink)">'+esc(state.user.email)+'</b> · keys are also saved to My Library</div>'
+    + '<button class="btn btn-g" id="payBtn" style="width:100%;margin-top:14px">Pay '+money(sub-disc)+'</button>'
+    + '<p style="color:var(--ink3);font-size:12px;text-align:center;margin:10px 0 0">Demo checkout — no real payment is taken.</p>';
+  $("#coScrim").classList.add("on");
+  payMethod="bKash";
+  document.querySelectorAll("#paym button").forEach(b=>b.onclick=()=>{
+    document.querySelectorAll("#paym button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); payMethod=b.dataset.pay;
+  });
+  $("#payBtn").onclick=placeOrder;
+}
+function placeOrder(){
+  $("#coBody").innerHTML='<div style="text-align:center;padding:18px 0"><div class="spin"></div><b>Confirming payment…</b><p style="color:var(--ink2)">Confirming with your payment provider — this takes a few seconds.</p></div>';
+  setTimeout(()=>{
+    const oid="KN-"+(++state.orderSeq);
+    const items=Object.entries(state.cart).map(([id,q])=>({pid:id,qty:q,price:byId(id).price}));
+    const total=items.reduce((a,i)=>a+i.price*i.qty,0)*(1-state.promo);
+    let delivered=[], pending=[];
+    items.forEach(it=>{
+      const p=byId(it.pid);
+      for(let n=0;n<it.qty;n++){
+        if(p.mode==="auto" && p.stock>0){
+          p.stock--; p.soldKeys++;
+          const key = p.pool.length? p.pool.shift() : genKey();
+          state.library.unshift({oid, pid:p.id, key, status:"delivered", when:"Just now", owner:state.user.email});
+          delivered.push({p,key});
+        } else {
+          state.library.unshift({oid, pid:p.id, key:null, status:"pending", when:"Just now", owner:state.user.email});
+          pending.push(p);
+        }
+      }
+    });
+    const status = pending.length? (delivered.length? "Partially delivered":"Pending delivery") : "Delivered";
+    state.orders.unshift({id:oid, when:"Just now", customer:state.user.email, items, total, pay:payMethod, status});
+    state.cart={}; state.promo=0; state.promoCode=""; renderCart(); renderGrid(); renderLibrary(); renderAdmin(); renderAccount();
+    $("#coBody").innerHTML =
+      '<div style="text-align:center"><div style="width:56px;height:56px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;margin:6px auto 12px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>'
+      + '<h3 style="font-size:20px">Order '+oid+' confirmed</h3>'
+      + '<p style="color:var(--ink2)">'+(delivered.length? delivered.length+" key(s) delivered instantly to your Library. ":"")
+      + (pending.length? pending.length+" item(s) are delivered manually — they will appear in your Library within a few hours.":"")+'</p>'
+      + (delivered.length? '<div style="text-align:left;margin:14px 0">'+delivered.map(d=>'<div class="keybox" style="margin-bottom:8px"><code>'+d.key+'</code><span class="pill ok">'+esc(d.p.name)+'</span></div>').join("")+'</div>':"")
+      + '<div style="display:flex;gap:10px;justify-content:center;margin-top:16px"><button class="btn btn-g" id="goLib">Open My Library</button><button class="btn btn-o" data-close="coScrim">Keep shopping</button></div></div>';
+    bindClosers();
+    $("#goLib").onclick=()=>{ $("#coScrim").classList.remove("on"); switchView("library"); };
+  }, 1100);
+}
+
+/* ============================== LIBRARY ============================== */
+function myLibrary(){ return state.library.map((li,idx)=>({li,idx})).filter(x=> state.user && x.li.owner===state.user.email); }
+function renderLibrary(){
+  const mine = state.user? myLibrary() : [];
+  $("#libN").textContent = mine.length? "("+mine.length+")":"";
+  $("#libGate").style.display = state.user? "none":"block";
+  $("#libEmpty").style.display = (state.user && !mine.length)? "block":"none";
+  $("#libList").innerHTML = mine.map(({li,idx})=>{ const p=byId(li.pid);
+    return '<div class="lib-item"><div class="thumb">'+tileHTML(p,true)+'</div>'
+    + '<div style="min-width:170px"><b>'+esc(p.name)+'</b><div style="color:var(--ink3);font-size:12.5px;font-weight:600">Order '+li.oid+" · "+li.when+'</div></div>'
+    + (li.status==="delivered"
+        ? '<div class="keybox"><code data-key="'+idx+'">•••••-•••••-•••••</code><button class="btn btn-o btn-sm" data-reveal="'+idx+'">Reveal</button><button class="btn btn-g btn-sm" data-copy="'+idx+'">Copy</button></div><span class="pill ok">Delivered</span>'
+        : '<div class="keybox"><code style="color:var(--ink3)">Awaiting manual delivery…</code></div><span class="pill wait">Pending · up to 6h</span>')
+    + '</div>';
+  }).join("");
+}
+
+/* ============================== ADMIN ============================== */
+function pendingItems(){
+  const out=[];
+  state.library.forEach((li,idx)=>{ if(li.status==="pending") out.push({li,idx}); });
+  return out;
+}
+function renderAdmin(){
+  const pend=pendingItems();
+  $("#penN").textContent = pend.length? "("+pend.length+")":"";
+  // stats
+  const revenue = state.orders.reduce((a,o)=>a+o.total,0);
+  const keysInVault = PRODUCTS.filter(p=>p.mode==="auto").reduce((a,p)=>a+p.stock,0);
+  $("#stats").innerHTML =
+    '<div class="stat"><div class="k">Revenue</div><div class="v">'+money(revenue)+'</div><div class="d" style="color:var(--green)">▲ from '+state.orders.length+' orders</div></div>'
+    + '<div class="stat"><div class="k">Orders</div><div class="v">'+state.orders.length+'</div><div class="d" style="color:var(--ink2)">All orders placed on the store</div></div>'
+    + '<div class="stat"><div class="k">Keys in vault</div><div class="v">'+keysInVault+'</div><div class="d" style="color:var(--ink2)">Across '+PRODUCTS.filter(p=>p.mode==="auto").length+' auto-delivery products</div></div>'
+    + '<div class="stat"><div class="k">Pending delivery</div><div class="v" style="color:'+(pend.length?"var(--amber)":"inherit")+'">'+pend.length+'</div><div class="d" style="color:var(--ink2)">Manual delivery queue</div></div>';
+  // alerts
+  const low = PRODUCTS.filter(p=>p.mode==="auto" && p.stock<=5);
+  $("#alerts").innerHTML = low.length? low.map(p=>'<div class="alert"><span aria-hidden="true">⚠</span><span><b>'+esc(p.name)+'</b> — only <b>'+p.stock+' keys</b> left in the vault. Import a new supplier batch before it sells out.</span></div>').join("")
+    : '<p style="color:var(--ink2);margin:0">All auto-delivery products are stocked above the alert level.</p>';
+  // orders table rows
+  const rowHTML=o=>'<tr><td class="mono">'+o.id+'</td>'+(o.when!=='skip'?'<td>'+o.when+'</td>':"")+'<td>'+esc(o.customer)+'</td><td>'+o.items.map(i=>esc(byId(i.pid).name)+" ×"+i.qty).join("<br>")+'</td><td><b>'+money(o.total)+'</b></td><td>'+o.pay+'</td><td>'+(o.status==="Delivered"?'<span class="pill ok">Delivered</span>':o.status==="Pending delivery"?'<span class="pill wait">Pending delivery</span>':'<span class="pill wait">Partial</span>')+'</td></tr>';
+  $("#dashOrders").innerHTML = state.orders.slice(0,5).map(o=>{ const c={...o}; return '<tr><td class="mono">'+o.id+'</td><td>'+esc(o.customer)+'</td><td>'+o.items.length+' item(s)</td><td><b>'+money(o.total)+'</b></td><td>'+o.pay+'</td><td>'+(o.status==="Delivered"?'<span class="pill ok">Delivered</span>':'<span class="pill wait">'+o.status+'</span>')+'</td></tr>'; }).join("");
+  $("#ordTbl").innerHTML = state.orders.map(rowHTML).join("");
+  // vault
+  $("#vaultTbl").innerHTML = PRODUCTS.map(p=>'<tr><td><b>'+esc(p.name)+'</b></td><td>'+(p.mode==="auto"?'<span class="tag inst">⚡ Auto</span>':'<span class="tag man">Manual</span>')+'</td><td><b>'+(p.mode==="auto"?p.stock:"—")+'</b></td><td>'+p.soldKeys+'</td><td>'+(p.mode==="manual"?'<span class="stock low">Supplied to order</span>':p.stock<=0?'<span class="stock out">Out of stock</span>':p.stock<=5?'<span class="stock low">Low stock</span>':'<span class="stock ok">Healthy</span>')+'</td></tr>').join("");
+  // batches
+  $("#batchTbl").innerHTML = state.batches.map(b=>'<tr><td class="mono">'+b.id+'</td><td>'+esc(byId(b.pid).name)+'</td><td>'+esc(b.supplier)+'</td><td>'+b.n+'</td><td>$'+Number(b.cost).toFixed(2)+'</td><td>'+b.when+'</td></tr>').join("");
+  // products
+  $("#prodTbl").innerHTML = PRODUCTS.map(p=>'<tr><td><b>'+esc(p.name)+'</b><div style="color:var(--ink3);font-size:12px">'+esc(p.sub)+'</div></td><td>'+p.cat+'</td><td><b>'+money(p.price)+'</b> <span class="was">'+money(p.mrp)+'</span></td><td>'+(p.mode==="auto"?p.stock:"—")+'</td><td><button class="btn btn-o btn-sm" data-mode="'+p.id+'">'+(p.mode==="auto"?"⚡ Auto":"Manual")+' — switch</button></td></tr>').join("");
+  // pending queue
+  $("#pendEmpty").style.display = pend.length? "none":"block";
+  $("#pendList").innerHTML = pend.map(({li,idx})=>{ const p=byId(li.pid);
+    return '<div class="lib-item"><div class="thumb">'+tileHTML(p,true)+'</div>'
+    + '<div style="min-width:170px"><b>'+esc(p.name)+'</b><div style="color:var(--ink3);font-size:12.5px;font-weight:600">Order '+li.oid+" · "+li.when+" · "+esc((state.orders.find(o=>o.id===li.oid)||{}).customer||"")+'</div></div>'
+    + '<div class="fulfil" style="flex:1"><input placeholder="Paste key / code from supplier…" id="fk-'+idx+'"/><button class="btn btn-g btn-sm" data-fulfil="'+idx+'">Deliver</button></div></div>';
+  }).join("");
+  // import select
+  const sel=$("#impProduct");
+  sel.innerHTML = PRODUCTS.map(p=>'<option value="'+p.id+'">'+esc(p.name)+' ('+(p.mode==="auto"?p.stock+" in stock":"manual")+')</option>').join("");
+}
+function importKeys(){
+  const pid=$("#impProduct").value, p=byId(pid);
+  const raw=$("#impKeys").value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(!raw.length){ $("#impMsg").textContent="Paste at least one key first."; return; }
+  const existing=new Set();
+  PRODUCTS.forEach(x=>x.pool.forEach(k=>existing.add(k)));
+  state.library.forEach(li=>{ if(li.key) existing.add(li.key); });
+  let added=0, dup=0;
+  raw.forEach(k=>{ if(existing.has(k)){ dup++; } else { existing.add(k); p.pool.push(k); added++; } });
+  if(p.mode==="auto") p.stock+=added; else if(added>0){ p.mode="auto"; p.stock+=added; }
+  const bid="B-"+(++state.batchSeq);
+  state.batches.unshift({id:bid, pid, supplier:$("#impSupplier").value.trim()||"Unspecified supplier", n:added, cost:parseFloat($("#impCost").value)||0, when:"Just now"});
+  $("#impMsg").textContent = "Imported "+added+" key(s) as batch "+bid+(dup? " · "+dup+" duplicate(s) rejected":"")+".";
+  $("#impKeys").value=""; $("#impSupplier").value=""; $("#impCost").value="";
+  toast("Vault updated — "+p.name+" now has "+p.stock+" keys");
+  renderAdmin(); renderGrid();
+}
+
+/* ============================== ACCOUNT / AUTH ============================== */
+function initials(n){ return n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase(); }
+function renderAuth(){
+  const u=state.user;
+  $("#authBtn").style.display = u? "none":"";
+  $("#joinBtn").style.display = u? "none":"";
+  const chip=$("#userChip");
+  if(u){ chip.style.display=""; chip.innerHTML='<span class="avatar">'+initials(u.name)+'</span> '+esc(u.name.split(" ")[0]); }
+  else chip.style.display="none";
+}
+function openAuth(mode, note){
+  state.authMode = mode||"signin";
+  const m=state.authMode;
+  $("#authBody").innerHTML =
+    '<h3 style="font-size:20px;margin-bottom:4px">'+(m==="signup"?"Create your account":"Welcome back")+'</h3>'
+    + '<p style="color:var(--ink2);font-size:13.5px;margin:0 0 16px">'+(note? esc(note) : (m==="signup"?"Buy in under a minute — keys are delivered to your library instantly after payment.":"Sign in to view your library, orders and keys."))+'</p>'
+    + '<div class="authtabs"><button data-amode="signin" class="'+(m==="signin"?"on":"")+'">Sign in</button><button data-amode="signup" class="'+(m==="signup"?"on":"")+'">Create account</button></div>'
+    + (m==="signup"? '<div class="field"><label for="auName">Full name</label><input id="auName" type="text" placeholder="Your name" autocomplete="name"/></div>':"")
+    + '<div class="field"><label for="auEmail">Email</label><input id="auEmail" type="email" placeholder="you@example.com" autocomplete="email"/></div>'
+    + '<div class="field"><label for="auPass">Password</label><input id="auPass" type="password" placeholder="'+(m==="signup"?"At least 6 characters":"Your password")+'" autocomplete="'+(m==="signup"?"new-password":"current-password")+'"/></div>'
+    + '<div id="authErr" style="color:var(--red);font-size:13px;font-weight:700;min-height:18px;margin-bottom:8px"></div>'
+    + '<button class="btn btn-g" id="authGo" style="width:100%">'+(m==="signup"?"Create account":"Sign in")+'</button>'
+    + '<button class="btn btn-o" id="authDemo" style="width:100%;margin-top:8px">Continue with the demo account</button>'
+    + '<p style="color:var(--ink3);font-size:12px;text-align:center;margin:12px 0 0">Demo sign-up — your account lives only in this browser session.</p>';
+  $("#authScrim").classList.add("on");
+  document.querySelectorAll("[data-amode]").forEach(b=>b.onclick=()=>openAuth(b.dataset.amode, note));
+  $("#authGo").onclick=submitAuth;
+  $("#authDemo").onclick=()=>{ signInAs(state.accounts["demo@keynest.com"]); toast("Signed in with the demo account"); };
+}
+function authFail(msg){ $("#authErr").textContent=msg; }
+function submitAuth(){
+  const email=($("#auEmail").value||"").trim().toLowerCase();
+  const pass=$("#auPass").value||"";
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return authFail("Enter a valid email address.");
+  if(state.authMode==="signup"){
+    const name=($("#auName").value||"").trim();
+    if(name.length<2) return authFail("Enter your name.");
+    if(pass.length<6) return authFail("Password needs at least 6 characters.");
+    if(state.accounts[email]) return authFail("An account with this email already exists — sign in instead.");
+    const acc={name, email, pass, since:"Oct 2026"};
+    state.accounts[email]=acc; signInAs(acc); toast("Account created — welcome, "+name.split(" ")[0]+"!");
+  } else {
+    const acc=state.accounts[email];
+    if(!acc) return authFail("No account found for this email — create one first.");
+    if(acc.pass!==pass) return authFail("Incorrect password. Try again, or use the demo account below.");
+    signInAs(acc); toast("Signed in — welcome back, "+acc.name.split(" ")[0]+"!");
+  }
+}
+function signInAs(acc){
+  state.user={name:acc.name, email:acc.email, since:acc.since};
+  $("#authScrim").classList.remove("on");
+  renderAuth(); renderLibrary(); renderAccount();
+  if(state.pendingCheckout){ state.pendingCheckout=false; if(cartCount()) openCheckout(); }
+}
+function signOut(){
+  state.user=null; state.pendingCheckout=false;
+  renderAuth(); renderLibrary(); renderAccount();
+  if(state.view==="library"||state.view==="account") switchView("store");
+  toast("Signed out. See you soon!");
+}
+function renderAccount(){
+  const u=state.user;
+  $("#accGate").style.display = u? "none":"block";
+  $("#accBody").style.display = u? "block":"none";
+  if(!u) return;
+  const mine=state.orders.filter(o=>o.customer===u.email);
+  const keys=state.library.filter(l=>l.owner===u.email);
+  const pend=keys.filter(l=>l.status==="pending").length;
+  $("#accBody").innerHTML =
+    '<div class="prof"><div class="panel" style="margin:0"><div style="display:flex;gap:14px;align-items:center;margin-bottom:14px"><span class="avatar lg">'+initials(u.name)+'</span><div><h3 style="font-size:18px">'+esc(u.name)+'</h3><div style="color:var(--ink2);font-size:13px">'+esc(u.email)+'</div><div style="color:var(--ink3);font-size:12.5px">Member since '+esc(u.since||"Oct 2026")+'</div></div></div>'
+    + '<div class="field"><label for="pfName">Display name</label><input id="pfName" type="text" value="'+esc(u.name)+'"/></div>'
+    + '<div class="field"><label for="pfCountry">Country</label><select id="pfCountry"><option>Bangladesh</option><option>India</option><option>United States</option><option>United Kingdom</option><option>United Arab Emirates</option><option>Other</option></select></div>'
+    + '<button class="btn btn-g btn-sm" id="pfSave">Save changes</button> <button class="btn btn-o btn-sm" id="pfOut">Sign out</button></div>'
+    + '<div><div class="stats" style="margin-bottom:16px">'
+    + '<div class="stat"><div class="k">Orders</div><div class="v">'+mine.length+'</div><div class="d" style="color:var(--ink2)">All time</div></div>'
+    + '<div class="stat"><div class="k">Keys owned</div><div class="v">'+keys.filter(l=>l.status==="delivered").length+'</div><div class="d" style="color:var(--ink2)">In your library</div></div>'
+    + '<div class="stat"><div class="k">Awaiting delivery</div><div class="v" style="color:'+(pend?"var(--amber)":"inherit")+'">'+pend+'</div><div class="d" style="color:var(--ink2)">Manual-delivery items</div></div></div>'
+    + '<h3 style="font-size:16.5px;margin-bottom:10px">Order history</h3>'
+    + (mine.length? mine.map(o=>'<div class="ordrow"><span><b class="mono">'+o.id+'</b> · '+o.when+'<br><span style="color:var(--ink2)">'+o.items.map(i=>esc(byId(i.pid).name)+" ×"+i.qty).join(", ")+'</span></span><span style="text-align:right"><b>'+money(o.total)+'</b><br>'+(o.status==="Delivered"?'<span class="pill ok">Delivered</span>':'<span class="pill wait">'+o.status+'</span>')+'</span></div>').join("") : '<div class="empty"><h3>No orders yet</h3>Your orders will show up here after your first purchase.</div>')
+    + '<button class="btn btn-o" id="accShop">Browse the store</button></div></div>';
+  $("#pfSave").onclick=()=>{ const n=$("#pfName").value.trim(); if(n.length<2){ toast("Name looks too short", true); return; } u.name=n; state.accounts[u.email].name=n; renderAuth(); renderAccount(); toast("Profile saved"); };
+  $("#pfOut").onclick=signOut;
+  $("#accShop").onclick=()=>switchView("store");
+}
+
+/* ============================== VIEW SWITCHING ============================== */
+function switchView(v){
+  state.view=v;
+  document.querySelectorAll(".vtab").forEach(t=>t.classList.toggle("on", t.dataset.view===v));
+  document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on", s.id==="view-"+v));
+  if(v==="admin") renderAdmin();
+  if(v==="library") renderLibrary();
+  if(v==="account") renderAccount();
+  window.scrollTo({top:0});
+}
+function switchATab(t){
+  state.atab=t;
+  document.querySelectorAll(".atab").forEach(b=>b.classList.toggle("on", b.dataset.atab===t));
+  document.querySelectorAll(".apane").forEach(p=>p.style.display = p.id==="apane-"+t? "block":"none");
+  renderAdmin();
+}
+
+/* ============================== EVENTS ============================== */
+function bindClosers(){
+  document.querySelectorAll("[data-close]").forEach(b=>{ b.onclick=()=>document.getElementById(b.dataset.close).classList.remove("on"); });
+}
+document.addEventListener("click", e=>{
+  const au=e.target.closest("[data-auth]"); if(au) openAuth(au.dataset.auth);
+  const open=e.target.closest("[data-open]"); if(open) openProduct(open.dataset.open);
+  const add=e.target.closest("[data-add]"); if(add && !add.disabled) addToCart(add.dataset.add,1);
+  const cq=e.target.closest("[data-cq]"); if(cq){ const [id,d]=cq.dataset.cq.split("|"); const p=byId(id); let q=(state.cart[id]||0)+Number(d);
+    if(q<=0) delete state.cart[id]; else if(p.mode==="auto"&&q>p.stock){ toast("Only "+p.stock+" keys in stock",true); } else state.cart[id]=q; renderCart(); }
+  const rm=e.target.closest("[data-rm]"); if(rm){ delete state.cart[rm.dataset.rm]; renderCart(); }
+  const cat=e.target.closest("[data-cat]"); if(cat){ state.cat=cat.dataset.cat; renderCats(); renderGrid(); }
+  const vt=e.target.closest(".vtab"); if(vt) switchView(vt.dataset.view);
+  const at=e.target.closest("[data-atab]"); if(at) switchATab(at.dataset.atab);
+  const rev=e.target.closest("[data-reveal]"); if(rev){ const li=state.library[Number(rev.dataset.reveal)]; const code=document.querySelector('[data-key="'+rev.dataset.reveal+'"]'); const shown=code.textContent.includes("•"); code.textContent= shown? li.key : "•••••-•••••-•••••"; rev.textContent= shown? "Hide":"Reveal"; }
+  const cp=e.target.closest("[data-copy]"); if(cp){ const li=state.library[Number(cp.dataset.copy)]; if(navigator.clipboard) navigator.clipboard.writeText(li.key); toast("Key copied — "+byId(li.pid).name); }
+  const ff=e.target.closest("[data-fulfil]"); if(ff){ const idx=Number(ff.dataset.fulfil); const inp=document.getElementById("fk-"+idx); const val=(inp.value||"").trim();
+    if(!val){ toast("Paste the supplier key first", true); return; }
+    const li=state.library[idx]; li.key=val; li.status="delivered";
+    const ord=state.orders.find(o=>o.id===li.oid);
+    if(ord && !state.library.some(l=>l.oid===ord.id && l.status==="pending")) ord.status="Delivered";
+    toast("Delivered — customer can now see the key in their Library"); renderAdmin(); renderLibrary(); }
+  const md=e.target.closest("[data-mode]"); if(md){ const p=byId(md.dataset.mode); p.mode = p.mode==="auto"? "manual":"auto"; toast(p.name+" is now "+(p.mode==="auto"?"⚡ Auto-delivery":"Manual delivery")); renderAdmin(); renderGrid(); }
+});
+$("#q").addEventListener("input", e=>{ state.q=e.target.value; if(state.view!=="store") switchView("store"); renderGrid(); });
+$("#sort").addEventListener("change", e=>{ state.sort=e.target.value; renderGrid(); });
+$("#cartBtn").addEventListener("click", openCart);
+$("#authBtn").addEventListener("click", ()=>openAuth("signin"));
+$("#joinBtn").addEventListener("click", ()=>openAuth("signup"));
+$("#userChip").addEventListener("click", ()=>switchView("account"));
+$("#adminLink").addEventListener("click", ()=>switchView("admin"));
+$("#drawerX").addEventListener("click", ()=>$("#drawer").classList.remove("on"));
+$("#curBtn").addEventListener("click", ()=>{ state.currency = state.currency==="USD"? "BDT":"USD"; $("#curBtn").textContent = state.currency==="USD"? "USD $":"BDT ৳"; renderGrid(); renderCart(); renderAdmin(); if(pdId && $("#pdScrim").classList.contains("on")) openProduct(pdId); });
+$("#impBtn").addEventListener("click", importKeys);
+$("#heroBuy").addEventListener("click", ()=>{ addToCart("fc26",1); openCart(); });
+$("#heroView").addEventListener("click", ()=>openProduct("fc26"));
+document.querySelectorAll(".scrim").forEach(s=>s.addEventListener("click", e=>{ if(e.target===s) s.classList.remove("on"); }));
+bindClosers();
+
+/* hero art + countdown */
+$("#heroArt").innerHTML = tileHTML(byId("fc26"));
+let cdEnd = Date.now() + (4*3600+12*60+33)*1000;
+setInterval(()=>{
+  let d=Math.max(0, Math.floor((cdEnd-Date.now())/1000));
+  const h=Math.floor(d/3600), m=Math.floor(d%3600/60), s=d%60;
+  $("#cdH").textContent=String(h).padStart(2,"0"); $("#cdM").textContent=String(m).padStart(2,"0"); $("#cdS").textContent=String(s).padStart(2,"0");
+}, 1000);
+
+/* init */
+renderCats(); renderGrid(); renderCart(); renderAuth(); renderLibrary(); renderAccount(); renderAdmin();
+</script>
+</body>
+</html>
