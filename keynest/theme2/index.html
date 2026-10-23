@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" href="data:," />
+<title>KeyNest — Official Top-Up Centre · Games, UC, Diamonds &amp; Gift Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#070d1f; --bg2:#0a1229; --panel:#0f1a3a; --panel2:#14224c; --panel3:#1a2c5e;
+    --line:#22305e; --line2:#2e4076;
+    --ink:#f2f5ff; --ink2:#aebadd; --ink3:#7183ad;
+    --gold:#f6c445; --gold2:#ffdc73; --gold-deep:#d99e06; --gold-ink:#231a00;
+    --gold-soft:rgba(246,196,69,.13); --gold-line:rgba(246,196,69,.45);
+    --mint:#2fd67c; --mint-soft:rgba(47,214,124,.13);
+    --red:#ff5d5d; --red-soft:rgba(255,93,93,.13);
+    --sky:#4db2ff; --sky-soft:rgba(77,178,255,.13);
+    --r:14px; --r-lg:18px;
+    --shadow:0 22px 55px rgba(0,0,0,.6);
+    --glow:0 0 0 1px var(--gold-line), 0 14px 38px rgba(246,196,69,.16);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);font-family:"Manrope",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(900px 480px at 85% -120px, rgba(246,196,69,.10), transparent 60%),
+      radial-gradient(760px 420px at -120px 240px, rgba(38,84,214,.16), transparent 60%),
+      var(--bg)}
+  h1,h2,h3,.disp{font-family:"Chakra Petch",sans-serif;margin:0}
+  button{font:inherit;cursor:pointer;color:inherit}
+  input,select,textarea{font:inherit;color:var(--ink)}
+  .mono{font-family:"JetBrains Mono",monospace}
+  a{color:var(--sky);text-decoration:none}
+  ::selection{background:var(--gold);color:var(--gold-ink)}
+
+  .proto-banner{background:linear-gradient(90deg,#ffb020,#ffc94d);color:#241a00;text-align:center;font-size:13px;font-weight:700;line-height:1.45;padding:8px 16px}
+  .proto-banner strong{font-weight:800}
+
+  /* ---------- header ---------- */
+  header.site{position:sticky;top:0;z-index:60;background:rgba(7,13,31,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:box-shadow .25s ease}
+  header.site.scrolled{box-shadow:0 14px 34px rgba(0,0,0,.55)}
+  .hwrap{max-width:1260px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:9px;font-family:"Chakra Petch";font-weight:700;font-size:21px;letter-spacing:.01em;white-space:nowrap;cursor:pointer}
+  .logo .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,var(--gold2),var(--gold-deep));display:grid;place-items:center;color:var(--gold-ink);box-shadow:0 6px 18px rgba(246,196,69,.35)}
+  .logo em{font-style:normal;color:var(--gold)}
+  .logo .tag{display:block;font-family:"Manrope";font-size:9.5px;font-weight:800;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;line-height:1}
+  .search{flex:1;min-width:170px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:9px 16px;color:var(--ink3)}
+  .search:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft);color:var(--gold)}
+  .search input{flex:1;background:none;border:0;outline:0;min-width:0;color:var(--ink)}
+  .search input::placeholder{color:var(--ink3)}
+  .hbtns{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .chipbtn{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:border-color .15s ease, transform .15s ease}
+  .chipbtn:hover{border-color:var(--gold-line);color:var(--gold2)}
+  .cartbtn{position:relative}
+  .cartn{position:absolute;top:-7px;right:-7px;background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink);font-size:11px;font-weight:800;min-width:20px;height:20px;border-radius:99px;display:grid;place-items:center;padding:0 5px;box-shadow:0 4px 12px rgba(246,196,69,.4)}
+  .cartn.pop{animation:pop .35s ease}
+  @keyframes pop{35%{transform:scale(1.45)}}
+  .btn{border:0;border-radius:11px;font-weight:800;padding:10px 16px;font-size:14px;display:inline-flex;align-items:center;gap:7px;justify-content:center;transition:transform .12s ease, box-shadow .15s ease, background .15s ease}
+  .btn:active{transform:scale(.97)}
+  .btn-gold{background:linear-gradient(145deg,var(--gold2),var(--gold) 55%,var(--gold-deep));color:var(--gold-ink);box-shadow:0 8px 22px rgba(246,196,69,.28)}
+  .btn-gold:hover{box-shadow:0 10px 28px rgba(246,196,69,.45)}
+  .btn-o{background:var(--panel2);border:1px solid var(--line2);color:var(--ink)}
+  .btn-o:hover{border-color:var(--gold-line);color:var(--gold2)}
+  .btn-sm{padding:8px 13px;font-size:13px;border-radius:9px}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+  /* ---------- slide-in menu ---------- */
+  .mscrim{position:fixed;inset:0;background:rgba(2,4,12,.66);z-index:95;display:none}
+  .mscrim.on{display:block}
+  .menu{position:fixed;top:0;left:0;bottom:0;width:min(330px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:100;display:none;flex-direction:column;overflow:auto}
+  .menu.on{display:flex;animation:menuin .24s ease;box-shadow:var(--shadow)}
+  @keyframes menuin{from{transform:translateX(-44px);opacity:.4}to{transform:none;opacity:1}}
+  .mhead{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
+  .muser{padding:16px;border-bottom:1px solid var(--line);background:linear-gradient(160deg,rgba(246,196,69,.08),transparent)}
+  .mitems{padding:12px;display:flex;flex-direction:column;gap:4px}
+  .mitem{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;text-align:left;padding:11px 12px;border-radius:12px;font-weight:700;font-size:15px;color:var(--ink2)}
+  .mitem:hover{background:var(--panel);color:var(--ink)}
+  .mitem.on{background:var(--gold-soft);color:var(--gold)}
+  .mitem .ic{width:36px;height:36px;border-radius:10px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--ink2)}
+  .mitem.on .ic{color:var(--gold);border-color:var(--gold-line)}
+  .mitem small{display:block;font-size:12px;font-weight:600;color:var(--ink3)}
+  .mitem.on small{color:var(--ink2)}
+  .mbadge{margin-left:auto;background:var(--panel2);border:1px solid var(--line2);color:var(--ink2);font-size:11.5px;font-weight:800;border-radius:99px;padding:2px 8px}
+  .mitem.on .mbadge{border-color:var(--gold-line);color:var(--gold)}
+  .mfoot{margin-top:auto;padding:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;font-weight:600;line-height:1.7}
+  .linklike{background:none;border:0;color:var(--gold);font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:0}
+  .avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink);display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+  .avatar.lg{width:64px;height:64px;font-size:26px}
+
+  main{max-width:1260px;margin:0 auto;padding:16px 16px 80px}
+  .view{display:none}
+  .view.on{display:block;animation:viewin .3s ease}
+  @keyframes viewin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* ---------- flash bar ---------- */
+  .flashbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#3a0d0d,#571512 45%,#3a0d0d);border:1px solid rgba(255,93,93,.4);border-radius:12px;padding:9px 14px;margin-bottom:14px;font-size:13.5px}
+  .flashbar .fl{font-family:"Chakra Petch";font-weight:700;letter-spacing:.06em;color:#ffb1b1;text-transform:uppercase;font-size:12.5px;display:flex;align-items:center;gap:7px}
+  .flashbar .msg{color:#ffd9d9;font-weight:600}
+  .flashbar .sp{flex:1}
+  .cd{display:flex;gap:5px;align-items:center}
+  .cd b{background:#170404;border:1px solid rgba(255,93,93,.45);color:#fff;border-radius:7px;padding:3px 7px;font-family:"JetBrains Mono";font-size:14px;min-width:38px;text-align:center}
+  .cd span{color:#ffb1b1;font-size:10px;font-weight:800}
+
+  /* ---------- hero carousel ---------- */
+  .hero{position:relative;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line2);margin-bottom:14px;background:var(--panel)}
+  .htrack{display:flex;transition:transform .55s cubic-bezier(.22,.8,.28,1)}
+  .slide{min-width:100%;position:relative;overflow:hidden}
+  .slide-in{position:relative;z-index:2;padding:30px 30px 44px;max-width:640px;display:flex;flex-direction:column;gap:10px;justify-content:center;min-height:252px}
+  .slide .official{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;background:rgba(0,0,0,.35);border:1px solid var(--gold-line);color:var(--gold2);font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border-radius:99px;padding:5px 12px}
+  .slide h1{font-size:clamp(27px,4.4vw,44px);line-height:1.05;letter-spacing:.005em;text-transform:uppercase;text-shadow:0 4px 24px rgba(0,0,0,.5)}
+  .slide h1 .g{color:var(--gold)}
+  .slide p{color:#dbe4ff;margin:0;max-width:46ch;font-weight:600;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+  .slide .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .slide .from{color:#cdd8f7;font-size:13px;font-weight:700}
+  .slide .from b{display:block;font-family:"Chakra Petch";font-size:26px;color:#fff}
+  .slide-art{position:absolute;inset:0;z-index:1}
+  .slide-art .glyph{position:absolute;right:2%;top:50%;transform:translateY(-50%);font-family:"Chakra Petch";font-weight:700;font-size:clamp(90px,17vw,190px);line-height:.9;color:rgba(255,255,255,.14);text-align:right;letter-spacing:-.02em}
+  .slide-art .ring{position:absolute;border:1.5px solid rgba(255,255,255,.14);border-radius:50%}
+  .hnav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;background:rgba(4,8,20,.55);border:1px solid var(--line2);color:#fff;display:grid;place-items:center;font-size:17px;transition:background .15s,border-color .15s}
+  .hnav:hover{background:rgba(4,8,20,.85);border-color:var(--gold-line);color:var(--gold2)}
+  .hnav.prev{left:12px}.hnav.next{right:12px}
+  @media(max-width:719px){.hnav{display:none}}
+  @media(min-width:720px){.slide-in{padding-left:58px}}
+  .hdots{position:absolute;left:50%;transform:translateX(-50%);bottom:13px;z-index:3;display:flex;gap:7px}
+  .hdot{width:26px;height:5px;border-radius:99px;border:0;background:rgba(255,255,255,.3);padding:0;transition:background .2s,width .2s}
+  .hdot.on{background:var(--gold);width:40px}
+
+  /* ---------- official trust strip ---------- */
+  .official-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px;margin-bottom:18px}
+  .obadge{display:flex;gap:11px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+  .obadge .ic{width:36px;height:36px;border-radius:10px;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;flex:none}
+  .obadge b{display:block;font-size:13.5px;font-family:"Chakra Petch";letter-spacing:.02em}
+  .obadge span{color:var(--ink2);font-size:12px;font-weight:600}
+
+  /* ---------- rewards strip ---------- */
+  .rewards{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-radius:var(--r-lg);padding:18px 20px;margin-bottom:24px;color:var(--gold-ink);
+    background:linear-gradient(115deg,var(--gold2) 0%,var(--gold) 55%,var(--gold-deep) 100%);box-shadow:0 16px 36px rgba(246,196,69,.22);position:relative;overflow:hidden}
+  .rewards::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.09) 0 2px,transparent 2px 16px);pointer-events:none}
+  .rewards .coin{width:52px;height:52px;border-radius:50%;background:rgba(35,26,0,.16);border:2px solid rgba(35,26,0,.25);display:grid;place-items:center;flex:none;position:relative;z-index:1}
+  .rewards h3{font-size:19px;position:relative;z-index:1}
+  .rewards p{margin:2px 0 0;font-size:13.5px;font-weight:700;opacity:.85;position:relative;z-index:1}
+  .rewards .pts{margin-left:auto;text-align:right;position:relative;z-index:1}
+  .rewards .pts b{font-family:"Chakra Petch";font-size:30px;display:block;line-height:1}
+  .rewards .pts span{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+  .rewards .rbtn{position:relative;z-index:1;background:#231a00;color:var(--gold2);border:0;border-radius:10px;padding:10px 16px;font-weight:800;font-size:13.5px}
+  .rewards .rbtn:hover{background:#000}
+
+  /* ---------- category tabs ---------- */
+  .cats{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px;scrollbar-width:none}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{white-space:nowrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 16px;font-weight:800;font-size:13.5px;font-family:"Chakra Petch";letter-spacing:.02em;display:inline-flex;gap:7px;align-items:center;transition:border-color .15s,color .15s}
+  .cat:hover{border-color:var(--gold-line);color:var(--gold2)}
+  .cat.on{background:linear-gradient(145deg,var(--gold2),var(--gold-deep));border-color:transparent;color:var(--gold-ink);box-shadow:0 8px 20px rgba(246,196,69,.3)}
+  .cat .cnt{opacity:.65;font-weight:700;font-size:12px;font-family:"Manrope"}
+
+  /* ---------- cover tiles ---------- */
+  .tile{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:#fff;height:100%}
+  .tile::before{content:"";position:absolute;inset:0;background:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 14px),
+    radial-gradient(120% 90% at 85% 0%,rgba(255,255,255,.22),transparent 55%)}
+  .tile .glyph{position:absolute;top:4px;right:12px;font-family:"Chakra Petch";font-weight:700;font-size:72px;opacity:.22;line-height:1}
+  .tile .t-cat{position:relative;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+  .tile .t-name{position:relative;font-family:"Chakra Petch";font-weight:700;font-size:19px;line-height:1.15;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .tile.sm .t-name{font-size:14px}
+  .tile.sm .glyph{font-size:42px}
+
+  /* ---------- sections & cards ---------- */
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:24px 0 14px;flex-wrap:wrap}
+  .sec-head h2{font-size:21px;letter-spacing:.01em;text-transform:uppercase}
+  .sec-head h2 .g{color:var(--gold)}
+  .sec-head .sub{color:var(--ink3);font-size:13px;font-weight:600}
+  .sec-head .sp{flex:1}
+  select.sort{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-weight:600;font-size:13.5px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(218px,1fr));gap:15px}
+  .pcard{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+  .pcard:hover{transform:translateY(-4px);border-color:var(--gold-line);box-shadow:var(--glow)}
+  .pcard .cover{aspect-ratio:16/10.5;cursor:pointer;position:relative}
+  .badge-off{position:absolute;top:10px;left:10px;z-index:2;background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink);font-weight:800;font-size:13px;border-radius:8px;padding:3px 8px;box-shadow:0 5px 14px rgba(0,0,0,.35)}
+  .badge-flash{position:absolute;top:10px;right:10px;z-index:2;background:#e5322d;color:#fff;font-weight:800;font-size:11px;letter-spacing:.05em;border-radius:8px;padding:3px 8px}
+  .badge-bonus{position:absolute;bottom:10px;right:10px;z-index:2;background:rgba(10,16,36,.82);border:1px solid var(--gold-line);color:var(--gold2);font-weight:800;font-size:11px;border-radius:8px;padding:3px 8px;backdrop-filter:blur(4px)}
+  .pbody{padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .ptitle{font-weight:700;font-size:15px;line-height:1.3;cursor:pointer;font-family:"Chakra Petch"}
+  .ptitle:hover{color:var(--gold2)}
+  .tags{display:flex;gap:5px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;border:1px solid var(--line2);border-radius:6px;padding:2px 7px;color:var(--ink2)}
+  .tag.inst{color:var(--mint);border-color:rgba(47,214,124,.4);background:var(--mint-soft)}
+  .tag.man{color:var(--gold2);border-color:var(--gold-line);background:var(--gold-soft)}
+  .meta{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:12.5px;font-weight:600;flex-wrap:wrap}
+  .meta .star{color:var(--gold)}
+  .prow{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding-top:4px}
+  .price{font-family:"Chakra Petch";font-weight:700;font-size:19px;color:var(--gold2)}
+  .price small{display:block;font-family:"Manrope";font-size:11px;color:var(--ink3);font-weight:700}
+  .was{color:var(--ink3);text-decoration:line-through;font-size:13px;font-weight:600}
+  .stock{font-size:12px;font-weight:700}
+  .stock.ok{color:var(--mint)} .stock.low{color:var(--gold)} .stock.out{color:var(--red)}
+  .oos{opacity:.55}
+  .empty{border:1px dashed var(--line2);border-radius:var(--r-lg);padding:44px 20px;text-align:center;color:var(--ink2)}
+  .empty h3{margin-bottom:6px;color:var(--ink)}
+  .fly-dot{position:fixed;z-index:300;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--gold2),var(--gold-deep));box-shadow:0 0 18px rgba(246,196,69,.8);pointer-events:none;transition:transform .7s cubic-bezier(.3,-0.1,.3,1), opacity .7s ease}
+
+  /* ---------- sheets / drawer ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(2,4,12,.75);z-index:80;display:none;align-items:flex-end;justify-content:center}
+  .scrim.on{display:flex}
+  .sheet{background:var(--bg2);border:1px solid var(--line2);border-radius:20px 20px 0 0;width:100%;max-width:780px;max-height:92dvh;overflow:auto;padding:22px;animation:up .22s ease}
+  @keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+  @media(min-width:720px){.scrim{align-items:center}.sheet{border-radius:20px}}
+  .sheet .x{float:right;background:var(--panel);border:1px solid var(--line);width:34px;height:34px;border-radius:10px;font-size:16px}
+  .pd-grid{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:640px){.pd-grid{grid-template-columns:300px 1fr}}
+  .pd-cover{border-radius:var(--r);overflow:hidden;aspect-ratio:16/11;position:relative}
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:10px;overflow:hidden}
+  .qty button{background:var(--panel);border:0;width:36px;height:38px;font-size:17px;font-weight:800}
+  .qty input{width:44px;text-align:center;background:none;border:0;outline:0;font-weight:800}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+  .fact{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px}
+  .fact b{display:block;font-size:13.5px}
+  .fact span{color:var(--ink3);font-size:12px;font-weight:600}
+  .steps{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+  .step{flex:1;min-width:140px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink2);font-weight:600}
+  .step b{display:block;color:var(--gold2);font-family:"Chakra Petch";font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+  /* denomination grid */
+  .denoms{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:9px;margin:6px 0 4px}
+  .denom{position:relative;background:var(--panel);border:1.5px solid var(--line2);border-radius:12px;padding:11px 10px 9px;text-align:left;transition:border-color .14s, background .14s, transform .14s}
+  .denom:hover{border-color:var(--gold-line);transform:translateY(-2px)}
+  .denom.on{border-color:var(--gold);background:var(--gold-soft);box-shadow:0 0 0 3px var(--gold-soft)}
+  .denom .d-amt{font-family:"Chakra Petch";font-weight:700;font-size:16.5px;display:block}
+  .denom .d-sub{font-size:11px;color:var(--ink3);font-weight:700;display:block}
+  .denom .d-price{font-family:"Chakra Petch";font-weight:700;color:var(--gold2);font-size:14.5px;display:block;margin-top:4px}
+  .denom .d-bonus{position:absolute;top:-8px;right:8px;background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink);font-size:10px;font-weight:800;border-radius:99px;padding:2px 7px;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+  .uidin{width:100%;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:11px 12px;outline:0}
+  .uidin:focus{border-color:var(--gold)}
+
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100%);background:var(--bg2);border-left:1px solid var(--line2);z-index:90;display:none;flex-direction:column;box-shadow:var(--shadow)}
+  .drawer.on{display:flex;animation:slidein .22s ease}
+  @keyframes slidein{from{transform:translateX(40px);opacity:.4}to{transform:none;opacity:1}}
+  .drawer header{padding:18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+  .ditems{flex:1;overflow:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+  .ditem{display:flex;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px}
+  .ditem .thumb{width:64px;height:52px;border-radius:8px;overflow:hidden;flex:none}
+  .dfoot{padding:16px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+  .sumrow{display:flex;justify-content:space-between;font-size:14px;color:var(--ink2);font-weight:600;gap:10px}
+  .sumrow.total{color:var(--ink);font-size:17px;font-weight:800;border-top:1px dashed var(--line2);padding-top:10px;font-family:"Chakra Petch"}
+  .promo{display:flex;gap:8px}
+  .promo input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;outline:0;min-width:0}
+  .paym{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .paym button{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 6px;font-weight:800;font-size:13px}
+  .paym button.on{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+  .spin{width:44px;height:44px;border-radius:50%;border:4px solid var(--line2);border-top-color:var(--gold);animation:sp .8s linear infinite;margin:26px auto}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  /* ---------- library / account / admin ---------- */
+  .lib-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .lib-item .thumb{width:92px;height:64px;border-radius:10px;overflow:hidden;flex:none}
+  .keybox{display:flex;gap:8px;align-items:center;background:#04060f;border:1px solid var(--line2);border-radius:10px;padding:9px 12px;flex:1;min-width:230px}
+  .keybox code{font-family:"JetBrains Mono";font-size:14.5px;font-weight:700;letter-spacing:.04em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gold2)}
+  .pill{font-size:11.5px;font-weight:800;border-radius:99px;padding:3px 10px;white-space:nowrap}
+  .pill.ok{background:var(--mint-soft);color:var(--mint)}
+  .pill.wait{background:var(--gold-soft);color:var(--gold)}
+  .gate{border:1px dashed var(--line2);border-radius:var(--r-lg);padding:40px 22px;text-align:center;color:var(--ink2)}
+  .gate h3{color:var(--ink);margin-bottom:6px}
+  .atabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+  .atab{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-weight:700;font-size:13.5px}
+  .atab.on{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+  .stat .k{color:var(--ink3);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .stat .v{font-family:"Chakra Petch";font-size:26px;font-weight:700;margin-top:4px}
+  .stat .d{font-size:12.5px;font-weight:700;margin-top:2px;color:var(--ink2)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;margin-bottom:18px}
+  .panel h3{font-size:16.5px;margin-bottom:4px}
+  .panel .hint{color:var(--ink2);font-size:13px;margin:0 0 14px}
+  .tblwrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+  th{text-align:left;color:var(--ink3);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  .alert{display:flex;gap:10px;align-items:flex-start;background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:10px;padding:11px 13px;font-size:13.5px;margin-bottom:8px}
+  textarea.keys{width:100%;background:#04060f;border:1px solid var(--line2);border-radius:10px;padding:12px;font-family:"JetBrains Mono";font-size:13px;min-height:110px;outline:0;resize:vertical}
+  textarea.keys:focus{border-color:var(--gold)}
+  .frow{display:flex;gap:10px;flex-wrap:wrap}
+  .frow select,.frow input[type=text]{background:#04060f;border:1px solid var(--line2);border-radius:10px;padding:10px 12px;outline:0}
+  .fulfil{display:flex;gap:8px;flex-wrap:wrap}
+  .fulfil input{flex:1;min-width:200px;background:#04060f;border:1px solid var(--line2);border-radius:10px;padding:9px 12px;font-family:"JetBrains Mono";font-size:13px;outline:0}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:6px}
+  .field input,.field select{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:0}
+  .field input:focus,.field select:focus{border-color:var(--gold)}
+  .authtabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:18px}
+  .authtabs button{flex:1;background:none;border:0;border-radius:9px;padding:9px;font-weight:800;font-size:14px;color:var(--ink2)}
+  .authtabs button.on{background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink)}
+  .prof{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:760px){.prof{grid-template-columns:320px 1fr}}
+  .ordrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;margin-bottom:10px;font-size:14px}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,80px);background:linear-gradient(145deg,var(--gold2),var(--gold));color:var(--gold-ink);font-weight:800;font-size:14px;border-radius:12px;padding:12px 18px;z-index:200;transition:transform .25s ease;box-shadow:var(--shadow);max-width:92vw;text-align:center}
+  .toast.on{transform:translate(-50%,0)}
+  .toast.err{background:#ffe1e1;color:#4d0d0d}
+  footer{border-top:1px solid var(--line);margin-top:50px}
+  .fwrap{max-width:1260px;margin:0 auto;padding:26px 16px;color:var(--ink3);font-size:13px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;font-weight:600}
+  .proto-note{max-width:1260px;margin:0 auto;padding:0 16px 22px;color:var(--ink2);font-size:13px;font-weight:600;text-align:center}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="proto-banner" role="note"><strong>Prototype demo</strong> — sample products and sample data only. Checkout is a demo: no real payment is taken.</div>
+
+<header class="site" id="topbar">
+  <div class="hwrap">
+    <button class="chipbtn" id="menuBtn" aria-label="Open menu" aria-expanded="false" style="padding:9px 11px"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="logo" id="logoHome" title="Back to the store"><span class="mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L19 3m-4 1 3 3"/></svg></span><span>Key<em>Nest</em><span class="tag">Official Top-Up Centre</span></span></div>
+    <label class="search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Search UC, diamonds, games, gift cards…" autocomplete="off" />
+    </label>
+    <div class="hbtns">
+      <button class="chipbtn" id="curBtn" title="Toggle currency">USD $</button>
+      <button class="chipbtn" id="authBtn">Sign in</button>
+      <button class="btn btn-gold btn-sm" id="joinBtn">Create account</button>
+      <button class="chipbtn" id="userChip" style="display:none"></button>
+      <button class="chipbtn cartbtn" id="cartBtn">Cart <span class="cartn" id="cartN">0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mscrim" id="menuScrim"></div>
+<nav class="menu" id="menu" aria-label="Menu">
+  <div class="mhead">
+    <div class="logo" style="font-size:18px"><span class="mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L19 3m-4 1 3 3"/></svg></span>Key<em>Nest</em></div>
+    <button class="chipbtn" id="menuX" aria-label="Close menu" style="padding:7px 11px">✕</button>
+  </div>
+  <div class="muser" id="menuUser"></div>
+  <div class="mitems">
+    <button class="mitem on" data-menu-view="store"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.8"/><path d="M9.5 21v-6h5v6"/></svg></span><span>Store<small>Top-ups, games, gift cards &amp; subscriptions</small></span></button>
+    <button class="mitem" data-menu-view="library"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15.5" r="4.5"/><path d="m11.3 12.2 8.2-8.2"/><path d="m16.5 7 3 3"/></svg></span><span>My Library<small>Your keys &amp; delivery status</small></span><span class="mbadge" id="libN" style="display:none"></span></button>
+    <button class="mitem" data-menu-view="account"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.4-3.8 4.4-5.2 7.5-5.2s6.1 1.4 7.5 5.2"/></svg></span><span>My Account<small>Profile, points &amp; order history</small></span></button>
+    <button class="mitem" data-menu-view="admin"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg></span><span>Admin Panel<small>Orders, key stock &amp; deliveries</small></span><span class="mbadge" id="menuPenN" style="display:none"></span></button>
+  </div>
+  <div class="mfoot">Prices in <button class="linklike" id="menuCur">USD $</button> — tap to switch currency.<br/>Official top-up centre · Instant delivery · 14-day bad-key guarantee.</div>
+</nav>
+
+<main>
+  <!-- ================= STORE ================= -->
+  <section class="view on" id="view-store">
+
+    <div class="flashbar" role="note">
+      <span class="fl"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg> Flash Deals</span>
+      <span class="msg">Up to <b>−93%</b> today — PUBG UC packs carry up to <b>+25% bonus UC</b>. Prices reset when the timer ends.</span>
+      <span class="sp"></span>
+      <div class="cd" aria-label="Flash sale countdown"><b id="cdH">04</b><span>HRS</span><b id="cdM">12</b><span>MIN</span><b id="cdS">33</b><span>SEC</span></div>
+    </div>
+
+    <div class="hero" id="hero">
+      <div class="htrack" id="htrack"></div>
+      <button class="hnav prev" id="hPrev" aria-label="Previous banner">‹</button>
+      <button class="hnav next" id="hNext" aria-label="Next banner">›</button>
+      <div class="hdots" id="hdots"></div>
+    </div>
+
+    <div class="official-strip">
+      <div class="obadge"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z"/><path d="m9 12 2 2 4-4.5"/></svg></div><div><b>Official Top-Up</b><span>Authorised reseller channels only</span></div></div>
+      <div class="obadge"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><div><b>Instant Delivery</b><span>Auto-stocked codes in under 30 seconds</span></div></div>
+      <div class="obadge"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div><b>Secure Payment</b><span>bKash · Nagad · Cards via SSLCommerz</span></div></div>
+      <div class="obadge"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></div><div><b>Bad-Key Guarantee</b><span>14-day replacement or full refund</span></div></div>
+    </div>
+
+    <div class="rewards">
+      <div class="coin"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.4l6.1-.8L12 3z"/></svg></div>
+      <div><h3>KeyNest Rewards</h3><p>Earn 10 points for every $1 you spend. 100 points = $1 bonus credit on any top-up pack.</p></div>
+      <div class="pts"><b id="ptsBal">10 pts / $1</b><span id="ptsLbl">Earn on every order</span></div>
+      <button class="rbtn" id="ptsBtn">How rewards work</button>
+    </div>
+
+    <div class="cats" id="cats" role="tablist" aria-label="Categories"></div>
+
+    <div class="sec-head">
+      <h2 id="gridTitle">All <span class="g">products</span></h2><span class="sub" id="gridCount"></span>
+      <span class="sp"></span>
+      <select class="sort" id="sort" aria-label="Sort products">
+        <option value="deal">Best deal</option>
+        <option value="priceAsc">Price: low → high</option>
+        <option value="priceDesc">Price: high → low</option>
+        <option value="rating">Top rated</option>
+        <option value="sold">Best selling</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="gridEmpty" style="display:none"><h3>No matches</h3>Try a different search term or category.</div>
+  </section>
+
+  <!-- ================= LIBRARY ================= -->
+  <section class="view" id="view-library">
+    <div class="sec-head"><h2>My <span class="g">Library</span></h2><span class="sub">Your purchased keys &amp; delivery status</span></div>
+    <div class="gate" id="libGate" style="display:none"><h3>Sign in to see your library</h3>Your keys are tied to your account. Sign in or create a free account to view your purchases and reveal your keys.<div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-gold" data-auth="signin">Sign in</button><button class="btn btn-o" data-auth="signup">Create account</button></div></div>
+    <div id="libList"></div>
+    <div class="empty" id="libEmpty"><h3>Nothing here yet</h3>Keys you buy appear here the moment payment confirms. Items marked manual delivery show as pending until they are delivered to your account.</div>
+  </section>
+
+  <!-- ================= ACCOUNT ================= -->
+  <section class="view" id="view-account">
+    <div class="sec-head"><h2>My <span class="g">Account</span></h2><span class="sub">Profile, rewards points and order history</span></div>
+    <div class="gate" id="accGate">
+      <h3>You're not signed in</h3>
+      Create a free account to buy products, earn KeyNest points, get your keys delivered to your library the moment you pay, and track every order in one place.
+      <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-gold" data-auth="signup">Create free account</button><button class="btn btn-o" data-auth="signin">Sign in</button></div>
+    </div>
+    <div id="accBody" style="display:none"></div>
+  </section>
+
+  <!-- ================= ADMIN ================= -->
+  <section class="view" id="view-admin">
+    <div class="sec-head"><h2>Admin <span class="g">Panel</span></h2><span class="sub">Orders, key stock and deliveries</span></div>
+    <div class="atabs" id="atabs">
+      <button class="atab on" data-atab="dash">Dashboard</button>
+      <button class="atab" data-atab="stock">Key Stock</button>
+      <button class="atab" data-atab="pending">Pending Delivery <span id="penN"></span></button>
+      <button class="atab" data-atab="orders">Orders</button>
+      <button class="atab" data-atab="products">Products</button>
+    </div>
+
+    <div class="apane" id="apane-dash">
+      <div class="stats" id="stats"></div>
+      <div class="panel"><h3>Low-stock alerts</h3><p class="hint">Auto-delivery products at 5 keys or fewer. Import more keys before they sell out.</p><div id="alerts"></div></div>
+      <div class="panel"><h3>Recent orders</h3><p class="hint">Latest activity across the store.</p><div class="tblwrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody id="dashOrders"></tbody></table></div></div>
+    </div>
+
+    <div class="apane" id="apane-stock" style="display:none">
+      <div class="panel">
+        <h3>Import keys</h3>
+        <p class="hint">Paste keys from a supplier, one per line. Duplicates already in stock are rejected automatically, and every import is logged as a supplier batch.</p>
+        <div class="frow" style="margin-bottom:10px">
+          <select id="impProduct" aria-label="Product"></select>
+          <input type="text" id="impSupplier" placeholder="Supplier (e.g. Trader — Telegram)" style="flex:1;min-width:180px" />
+          <input type="text" id="impCost" placeholder="Cost / key (USD)" style="width:150px" />
+        </div>
+        <textarea class="keys" id="impKeys" placeholder="XXXXX-XXXXX-XXXXX&#10;XXXXX-XXXXX-XXXXX&#10;XXXXX-XXXXX-XXXXX"></textarea>
+        <div class="frow" style="margin-top:12px"><button class="btn btn-gold" id="impBtn">Import into vault</button><span id="impMsg" style="align-self:center;color:var(--ink2);font-size:13px;font-weight:600"></span></div>
+      </div>
+      <div class="panel"><h3>Vault overview</h3><p class="hint">Available keys per product. Sold keys are never shown in plain text here.</p><div class="tblwrap"><table><thead><tr><th>Product</th><th>Mode</th><th>Available</th><th>Sold</th><th>Status</th></tr></thead><tbody id="vaultTbl"></tbody></table></div></div>
+      <div class="panel"><h3>Supplier batches</h3><p class="hint">Every manual purchase from a supplier, logged.</p><div class="tblwrap"><table><thead><tr><th>Batch</th><th>Product</th><th>Supplier</th><th>Keys</th><th>Cost / key</th><th>Imported</th></tr></thead><tbody id="batchTbl"></tbody></table></div></div>
+    </div>
+
+    <div class="apane" id="apane-pending" style="display:none">
+      <div class="panel">
+        <h3>Pending delivery queue</h3>
+        <p class="hint">Orders waiting for a key or top-up confirmation. Paste the code from your supplier and press Deliver — it appears in the customer's library right away.</p>
+        <div id="pendList"></div>
+        <div class="empty" id="pendEmpty"><h3>Queue is clear</h3>No orders are waiting for manual delivery.</div>
+      </div>
+    </div>
+
+    <div class="apane" id="apane-orders" style="display:none">
+      <div class="panel"><h3>All orders</h3><p class="hint">Every order placed on the store, with payment and delivery status.</p><div class="tblwrap"><table><thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody id="ordTbl"></tbody></table></div></div>
+    </div>
+
+    <div class="apane" id="apane-products" style="display:none">
+      <div class="panel"><h3>Products</h3><p class="hint">Delivery mode is set per product: <b>Auto</b> = instant from key stock, <b>Manual</b> = fulfil from the pending queue.</p><div class="tblwrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Delivery mode</th></tr></thead><tbody id="prodTbl"></tbody></table></div></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="fwrap"><span>KeyNest — official top-up centre for game currency, keys, gift cards and subscriptions.</span><span>Refund policy · Terms · Privacy · Contact</span></div><p class="proto-note">Prototype demo — sample products and sample data only. Checkout is a demo and no real payment is taken.</p></footer>
+
+<!-- product sheet -->
+<div class="scrim" id="pdScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Product details">
+  <button class="x" data-close="pdScrim" aria-label="Close">✕</button>
+  <div id="pdBody"></div>
+</div></div>
+
+<!-- checkout sheet -->
+<div class="scrim" id="coScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Checkout" style="max-width:520px">
+  <button class="x" data-close="coScrim" aria-label="Close">✕</button>
+  <div id="coBody"></div>
+</div></div>
+
+<!-- auth sheet -->
+<div class="scrim" id="authScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Account" style="max-width:440px">
+  <button class="x" data-close="authScrim" aria-label="Close">✕</button>
+  <div id="authBody"></div>
+</div></div>
+
+<!-- info sheet -->
+<div class="scrim" id="infoScrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Information" style="max-width:480px">
+  <button class="x" data-close="infoScrim" aria-label="Close">✕</button>
+  <div id="infoBody"></div>
+</div></div>
+
+<!-- cart drawer -->
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <header><h3 style="font-size:18px">Your cart</h3><button class="chipbtn" id="drawerX" aria-label="Close cart" style="padding:6px 11px">✕</button></header>
+  <div class="ditems" id="ditems"></div>
+  <div class="dfoot" id="dfoot"></div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* ============================== DATA ============================== */
+const RATE = 120; // BDT per USD (display only)
+const HUES = {a:["#7a1f2b","#c2410c"],b:["#14532d","#0e7490"],c:["#1e3a8a","#6d28d9"],d:["#7c2d12","#b45309"],e:["#134e4a","#166534"],f:["#831843","#9d174d"],g:["#312e81","#0369a1"],h:["#3f3f46","#991b1b"],i:["#7a4a00","#b97e10"],j:["#0b3d66","#1273b8"]};
+const PRODUCTS = [
+ {id:"pubg", name:"PUBG Mobile UC", sub:"Top-Up · Player ID", cat:"Top-Up", platform:"PUBG Mobile", region:"Global", price:0.89, mrp:0.99, rating:4.8, rc:3420, sold:48200, stock:0, mode:"manual", hue:"i", glyph:"UC", flash:true, topup:"Player ID", unit:"UC",
+  packs:[{amt:"60 UC",bonus:"",price:0.89,mrp:0.99},{amt:"325 UC",bonus:"+5% Bonus",price:4.39,mrp:4.99},{amt:"660 UC",bonus:"+10% Bonus UC",price:8.49,mrp:9.99},{amt:"1800 UC",bonus:"+15% Bonus UC",price:22.99,mrp:24.99},{amt:"3850 UC",bonus:"+20% Bonus UC",price:45.99,mrp:49.99},{amt:"8100 UC",bonus:"+25% Bonus UC",price:92.99,mrp:99.99}],
+  about:"Official UC top-up by Player ID — no password, no login. Bonus UC is credited with the pack. Credited within 15 minutes to 2 hours."},
+ {id:"ff", name:"Free Fire Diamonds", sub:"Top-Up · Player ID", cat:"Top-Up", platform:"Free Fire", region:"Global", price:0.79, mrp:0.99, rating:4.7, rc:2210, sold:31500, stock:0, mode:"manual", hue:"a", glyph:"◆", flash:true, topup:"Player ID", unit:"Diamonds",
+  packs:[{amt:"100 ◆",bonus:"",price:0.79,mrp:0.99},{amt:"310 ◆",bonus:"+10% Bonus",price:2.29,mrp:2.99},{amt:"520 ◆",bonus:"+15% Bonus",price:3.79,mrp:4.99},{amt:"1060 ◆",bonus:"+20% Bonus",price:7.49,mrp:9.99},{amt:"2180 ◆",bonus:"+25% Bonus",price:14.99,mrp:19.99},{amt:"5600 ◆",bonus:"+30% Bonus",price:36.99,mrp:49.99}],
+  about:"Garena Free Fire diamond top-up straight to your Player ID. Weekly and monthly membership cards also available on request. Credited within 15 minutes to 2 hours."},
+ {id:"fcp", name:"EA FC Mobile Points", sub:"Top-Up · Player ID", cat:"Top-Up", platform:"EA FC Mobile", region:"Global", price:0.99, mrp:1.19, rating:4.6, rc:1310, sold:18900, stock:0, mode:"manual", hue:"e", glyph:"FP", flash:false, topup:"Player ID", unit:"FC Points",
+  packs:[{amt:"100 FP",bonus:"",price:0.99,mrp:1.19},{amt:"520 FP",bonus:"+5% Bonus",price:4.79,mrp:5.49},{amt:"1050 FP",bonus:"+10% Bonus",price:9.29,mrp:10.99},{amt:"2150 FP",bonus:"+15% Bonus",price:18.49,mrp:21.99},{amt:"5750 FP",bonus:"+20% Bonus",price:46.99,mrp:54.99}],
+  about:"FC Points for EA FC Mobile, topped up by Player ID. Build your Ultimate Team faster — credited within 15 minutes to 2 hours."},
+ {id:"elden", name:"Elden Ring", sub:"PC · Steam Key", cat:"Games", platform:"Steam", region:"Global", price:23.99, mrp:59.99, rating:4.8, rc:2314, sold:10400, stock:47, mode:"auto", hue:"a", glyph:"ER", flash:false, about:"Explore the Lands Between in FromSoftware's open-world action RPG. One key, yours forever — no subscription."},
+ {id:"fc26", name:"EA FC 26", sub:"PC · EA App Key", cat:"Games", platform:"EA App", region:"Global", price:36.99, mrp:69.99, rating:4.6, rc:1893, sold:8200, stock:23, mode:"auto", hue:"b", glyph:"FC", flash:true, about:"The 2026 season with updated squads, Ultimate Team and full career mode. Global key — activates in Bangladesh."},
+ {id:"bg3", name:"Baldur's Gate 3", sub:"PC · Steam Key", cat:"Games", platform:"Steam", region:"Global", price:35.99, mrp:59.99, rating:4.9, rc:3120, sold:6800, stock:12, mode:"auto", hue:"c", glyph:"BG", flash:false, about:"Larian's award-winning story-driven RPG. Gather your party and return to the Forgotten Realms."},
+ {id:"rdr2", name:"Red Dead Redemption 2", sub:"PC · Steam Key", cat:"Games", platform:"Steam", region:"Global", price:19.79, mrp:59.99, rating:4.9, rc:4210, sold:15200, stock:5, mode:"auto", hue:"h", glyph:"RD", flash:true, about:"Rockstar's epic outlaw saga. Winner of over 175 Game of the Year awards."},
+ {id:"mc", name:"Minecraft: Java & Bedrock", sub:"PC · Microsoft Key", cat:"Games", platform:"Microsoft", region:"Global", price:21.49, mrp:29.99, rating:4.9, rc:5102, sold:21000, stock:64, mode:"auto", hue:"e", glyph:"MC", flash:false, about:"Both editions in one key. Build, survive and play with friends on any server."},
+ {id:"steam20", name:"Steam Wallet $20", sub:"Gift Card · USD", cat:"Gift Cards", platform:"Steam", region:"Global", price:18.49, mrp:20.00, rating:4.9, rc:1876, sold:19800, stock:120, mode:"auto", hue:"g", glyph:"$20", flash:false, about:"Top up any Steam account. Code delivered instantly, redeemable worldwide."},
+ {id:"psn50", name:"PlayStation Store $50", sub:"Gift Card · US account", cat:"Gift Cards", platform:"PlayStation", region:"US", price:46.99, mrp:50.00, rating:4.7, rc:932, sold:5400, stock:18, mode:"auto", hue:"c", glyph:"$50", flash:false, about:"For US PSN accounts. Buy games, add-ons and PlayStation Plus time."},
+ {id:"amz10", name:"Amazon Gift Card $10", sub:"Gift Card · US", cat:"Gift Cards", platform:"Amazon", region:"US", price:9.79, mrp:10.00, rating:4.6, rc:640, sold:3900, stock:0, mode:"manual", hue:"d", glyph:"$10", flash:false, about:"US Amazon balance. Supplied to order — delivered within 30 min – 6 hours."},
+ {id:"gpu", name:"Xbox Game Pass Ultimate", sub:"1 Month · Subscription", cat:"Subscriptions", platform:"Xbox", region:"Global", price:12.99, mrp:19.99, rating:4.8, rc:1440, sold:9700, stock:31, mode:"auto", hue:"e", glyph:"GP", flash:true, about:"Console + PC Game Pass, EA Play and cloud gaming for one month. Stackable up to 36 months."},
+ {id:"nfx", name:"Netflix Gift Card $25", sub:"Gift Card · US", cat:"Subscriptions", platform:"Netflix", region:"US", price:24.25, mrp:25.00, rating:4.5, rc:388, sold:1600, stock:0, mode:"manual", hue:"h", glyph:"NF", flash:false, about:"Official gift card — redeem on your own Netflix account. No shared accounts, ever. Delivered in 30 min – 6 hours."},
+ {id:"spot", name:"Spotify Premium Gift Card", sub:"3 Months · US", cat:"Subscriptions", platform:"Spotify", region:"US", price:32.99, mrp:35.97, rating:4.6, rc:455, sold:2100, stock:7, mode:"manual", hue:"b", glyph:"SP", flash:false, about:"Official 3-month Premium card for your own account. Delivered within 30 min – 6 hours."},
+ {id:"win11", name:"Windows 11 Pro", sub:"OEM Key · Software", cat:"Software", platform:"Microsoft", region:"Global", price:14.99, mrp:199.99, rating:4.5, rc:860, sold:7300, stock:42, mode:"auto", hue:"j", glyph:"W11", flash:false, about:"Genuine OEM activation key for one PC. Lifetime activation, delivered instantly."}
+];
+const CATS = ["All","Top-Up","Games","Gift Cards","Subscriptions","Software"];
+const SLIDES = [
+ {pid:"pubg", kick:"PUBG Mobile · Official Top-Up", title:'UC Bonus <span class="g">Festival</span>', sub:"Every pack carries bonus UC — up to +25% extra on the 8100 UC pack. Credited straight to your Player ID, no login needed.", bg:"linear-gradient(105deg,#191007 0%,#3d2704 52%,#7a5205 100%)", glyph:"UC", from:"660 UC pack", price:8.49},
+ {pid:"ff", kick:"Free Fire · Official Top-Up", title:'Diamond <span class="g">Rush Week</span>', sub:"Bonus diamonds on every pack this week, up to +30%. Top up by Player ID and get back into the match in minutes.", bg:"linear-gradient(105deg,#170607 0%,#4a0d12 52%,#8f1d12 100%)", glyph:"◆", from:"1060 ◆ pack", price:7.49},
+ {pid:"fc26", kick:"EA FC 26 · PC Key", title:'Kick Off For <span class="g">−47%</span>', sub:"The full 2026 season — updated squads, Ultimate Team and career mode. Global EA App key, delivered instantly.", bg:"linear-gradient(105deg,#04140c 0%,#0a3320 52%,#0e5c46 100%)", glyph:"FC 26", from:"Full game key", price:36.99}
+];
+
+/* ============================== STATE ============================== */
+let state = {
+  view:"store", cat:"All", q:"", sort:"deal", currency:"USD",
+  cart:{}, promo:0, promoCode:"",
+  orders:[], library:[], batches:[], batchSeq:104,
+  orderSeq:1042, atab:"dash", seed:7, points:240,
+  user:null, accounts:{}, pendingCheckout:false, authMode:"signup"
+};
+PRODUCTS.forEach(p=>{ p.pool=[]; p.soldKeys=0; });
+PRODUCTS.filter(p=>p.mode==="auto").forEach(p=>{ for(let i=0;i<Math.min(p.stock,6);i++) p.pool.push(genKey()); });
+seedDemo();
+
+function seedDemo(){
+  state.accounts = { "demo@keynest.com": {name:"Arif Rahman", email:"demo@keynest.com", pass:"demo1234", since:"Oct 2026"} };
+  state.batches = [
+    {id:"B-101", pid:"elden", supplier:"Wholesale trader — Telegram", n:50, cost:19.40, when:"21 Oct 2026"},
+    {id:"B-102", pid:"steam20", supplier:"Giftoro (bulk file)", n:120, cost:17.85, when:"22 Oct 2026"},
+    {id:"B-103", pid:"gpu", supplier:"Kinguin wholesale", n:40, cost:10.90, when:"22 Oct 2026"}
+  ];
+  state.orders = [
+    {id:"KN-1039", when:"Today, 11:42", customer:"rahim.uddin@gmail.com", items:[{pid:"steam20",qty:1,price:18.49,variant:""}], total:18.49, pay:"bKash", status:"Delivered"},
+    {id:"KN-1040", when:"Today, 12:15", customer:"demo@keynest.com", items:[{pid:"pubg",qty:2,price:8.49,variant:"660 UC"}], total:16.98, pay:"Nagad", status:"Pending delivery"},
+    {id:"KN-1041", when:"Today, 13:03", customer:"demo@keynest.com", items:[{pid:"gpu",qty:1,price:12.99,variant:""},{pid:"mc",qty:1,price:21.49,variant:""}], total:34.48, pay:"Card · Paddle", status:"Delivered"}
+  ];
+  state.library = [
+    {oid:"KN-1041", pid:"gpu", variant:"", key:"XBOX-GP7K2-99QMD-ZX41A", status:"delivered", when:"Today, 13:03", owner:"demo@keynest.com"},
+    {oid:"KN-1040", pid:"pubg", variant:"660 UC", key:null, status:"pending", when:"Today, 12:15", owner:"demo@keynest.com"}
+  ];
+}
+
+/* ============================== HELPERS ============================== */
+const $ = s=>document.querySelector(s);
+const byId = id=>PRODUCTS.find(p=>p.id===id);
+function money(usd){ return state.currency==="USD" ? "$"+usd.toFixed(2) : "৳"+Math.round(usd*RATE).toLocaleString("en-IN"); }
+function offPct(p){ return Math.round((1-p.price/p.mrp)*100); }
+function isPack(p){ return !!p.packs; }
+function stockLabel(p){
+  if(p.mode==="manual") return '<span class="stock low">Supplied to order</span>';
+  if(p.stock<=0) return '<span class="stock out">Out of stock</span>';
+  if(p.stock<=5) return '<span class="stock low">Only '+p.stock+' left</span>';
+  return '<span class="stock ok">In stock · '+p.stock+' keys</span>';
+}
+function maxBonus(p){ if(!isPack(p)) return ""; let m=0,lab=""; p.packs.forEach(k=>{ const n=parseInt(k.bonus)||0; if(n>m){m=n;lab=k.bonus;} }); return lab; }
+function tileHTML(p, sm){
+  const h = HUES[p.hue];
+  return '<div class="tile'+(sm?" sm":"")+'" style="background:linear-gradient(140deg,'+h[0]+','+h[1]+')"><span class="glyph">'+p.glyph+'</span><span class="t-cat">'+p.platform+" · "+p.region+'</span><span class="t-name">'+p.name+'</span></div>';
+}
+function toast(msg, err){
+  const t=$("#toast"); t.textContent=msg; t.className="toast on"+(err?" err":"");
+  clearTimeout(t._h); t._h=setTimeout(()=>t.className="toast",2600);
+}
+function genKey(){
+  const cs="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let out="";
+  for(let g=0;g<3;g++){ for(let i=0;i<5;i++){ state.seed=(state.seed*9301+49297)%233280; out+=cs[Math.floor(state.seed/233280*cs.length)]; } if(g<2) out+="-"; }
+  return out;
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function flyToCart(fromEl){
+  if(!fromEl) return;
+  const c=$("#cartBtn"); const r1=fromEl.getBoundingClientRect(), r2=c.getBoundingClientRect();
+  const d=document.createElement("div"); d.className="fly-dot";
+  d.style.left=(r1.left+r1.width/2-8)+"px"; d.style.top=(r1.top+r1.height/2-8)+"px";
+  document.body.appendChild(d);
+  requestAnimationFrame(()=>{ d.style.transform="translate("+(r2.left+r2.width/2-(r1.left+r1.width/2))+"px,"+(r2.top+r2.height/2-(r1.top+r1.height/2))+"px) scale(.35)"; d.style.opacity=".25"; });
+  setTimeout(()=>{ d.remove(); const n=$("#cartN"); n.classList.remove("pop"); void n.offsetWidth; n.classList.add("pop"); }, 720);
+}
+
+/* ============================== HERO CAROUSEL ============================== */
+let slideIdx=0, slideTimer=null;
+function renderHero(){
+  $("#htrack").innerHTML = SLIDES.map(s=>{
+    const p=byId(s.pid);
+    return '<div class="slide" style="background:'+s.bg+'"><div class="slide-art"><span class="glyph">'+s.glyph+'</span><span class="ring" style="width:340px;height:340px;right:-90px;top:-120px"></span><span class="ring" style="width:200px;height:200px;right:60px;bottom:-110px"></span></div>'
+    + '<div class="slide-in"><span class="official"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6l7-3z"/><path d="m9 12 2 2 4-4.5"/></svg>'+s.kick+'</span>'
+    + '<h1>'+s.title+'</h1><p>'+s.sub+'</p>'
+    + '<div class="row"><span class="from">'+s.from+'<b>'+money(s.price)+'</b></span>'
+    + '<button class="btn btn-gold" data-slide-buy="'+s.pid+'">'+(isPack(p)?"Top up now":"Buy now")+'</button>'
+    + '<button class="btn btn-o" data-slide-view="'+s.pid+'" style="background:rgba(0,0,0,.3)">View details</button></div></div></div>';
+  }).join("");
+  $("#hdots").innerHTML = SLIDES.map((_,i)=>'<button class="hdot'+(i===0?" on":"")+'" data-slide="'+i+'" aria-label="Go to banner '+(i+1)+'"></button>').join("");
+}
+function goSlide(i){
+  slideIdx=(i+SLIDES.length)%SLIDES.length;
+  $("#htrack").style.transform="translateX(-"+(slideIdx*100)+"%)";
+  document.querySelectorAll(".hdot").forEach((d,j)=>d.classList.toggle("on", j===slideIdx));
+}
+function heroAuto(){ clearInterval(slideTimer); slideTimer=setInterval(()=>goSlide(slideIdx+1), 5200); }
+function initHeroTouch(){
+  const h=$("#hero"); let x0=null;
+  h.addEventListener("touchstart", e=>{ x0=e.touches[0].clientX; clearInterval(slideTimer); }, {passive:true});
+  h.addEventListener("touchend", e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>42) goSlide(slideIdx+(dx<0?1:-1)); x0=null; heroAuto(); }, {passive:true});
+  h.addEventListener("mouseenter", ()=>clearInterval(slideTimer));
+  h.addEventListener("mouseleave", heroAuto);
+}
+
+/* ============================== STORE ============================== */
+function renderCats(){
+  $("#cats").innerHTML = CATS.map(c=>{
+    const n = c==="All" ? PRODUCTS.length : PRODUCTS.filter(p=>p.cat===c).length;
+    return '<button class="cat'+(state.cat===c?" on":"")+'" data-cat="'+c+'">'+c+' <span class="cnt">'+n+'</span></button>';
+  }).join("");
+}
+function visibleProducts(){
+  let list = PRODUCTS.filter(p=>
+    (state.cat==="All"||p.cat===state.cat) &&
+    (p.name+" "+p.sub+" "+p.platform+" "+p.cat).toLowerCase().includes(state.q.toLowerCase())
+  );
+  const s=state.sort;
+  list.sort((a,b)=> s==="priceAsc"?a.price-b.price : s==="priceDesc"?b.price-a.price : s==="rating"?b.rating-a.rating : s==="sold"?b.sold-a.sold : offPct(b)-offPct(a));
+  return list;
+}
+function cardHTML(p){
+  const oos = p.mode==="auto" && p.stock<=0;
+  const bonus = maxBonus(p);
+  const priceLine = isPack(p)
+    ? '<div class="price"><small>PACKS FROM</small>'+money(p.price)+'</div><div class="was">'+money(p.mrp)+'</div>'
+    : '<div class="price">'+money(p.price)+'</div><div class="was">'+money(p.mrp)+'</div>';
+  return '<article class="pcard'+(oos?" oos":"")+'">'
+    + '<div class="cover" data-open="'+p.id+'"><span class="badge-off">−'+offPct(p)+'%</span>'
+    + (p.flash?'<span class="badge-flash">FLASH DEAL</span>':"")
+    + (bonus?'<span class="badge-bonus">'+esc(bonus)+'</span>':"")
+    + tileHTML(p) + '</div>'
+    + '<div class="pbody"><div class="ptitle" data-open="'+p.id+'">'+esc(p.name)+'</div>'
+    + '<div class="tags"><span class="tag">'+p.platform+'</span><span class="tag">'+p.region+'</span>'
+    + (p.mode==="auto"?'<span class="tag inst">⚡ Instant</span>':(isPack(p)?'<span class="tag man">Top-up · 15m–2h</span>':'<span class="tag man">Manual · 30m–6h</span>'))+'</div>'
+    + '<div class="meta"><span class="star">★ '+p.rating+'</span><span>'+p.rc.toLocaleString()+' reviews</span><span>'+(p.sold/1000).toFixed(1)+'k sold</span></div>'
+    + '<div class="prow"><div>'+priceLine+'</div><div style="text-align:right">'+stockLabel(p)
+    + '<div style="margin-top:6px"><button class="btn btn-gold btn-sm" data-add="'+p.id+'" '+(oos?"disabled":"")+'>'+(oos?"Notify me":(isPack(p)?"Top up":"Add to cart"))+'</button></div></div></div>'
+    + '</div></article>';
+}
+function renderGrid(){
+  const list = visibleProducts();
+  $("#grid").innerHTML = list.map(cardHTML).join("");
+  $("#gridEmpty").style.display = list.length? "none":"block";
+  const t = state.q ? 'Results for “'+esc(state.q)+'”' : (state.cat==="All"?'All <span class="g">products</span>':esc(state.cat));
+  $("#gridTitle").innerHTML = t;
+  $("#gridCount").textContent = list.length+" products";
+}
+
+/* ---------- product sheet (with denomination packs) ---------- */
+let pdQty = 1, pdId = null, pdPack = 0;
+function packPriceHTML(p){
+  const k = p.packs[pdPack];
+  return '<span class="price" style="font-size:30px">'+money(k.price)+'</span><span class="was" style="font-size:16px">'+money(k.mrp)+'</span><span style="background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink);font-weight:800;border-radius:8px;padding:3px 9px">−'+Math.round((1-k.price/k.mrp)*100)+'%</span>'
+    + (k.bonus? '<span style="background:var(--gold-soft);border:1px solid var(--gold-line);color:var(--gold2);font-weight:800;border-radius:8px;padding:3px 9px;font-size:12.5px">'+esc(k.bonus)+'</span>':"");
+}
+function refreshPdPrice(){
+  const p=byId(pdId); if(!p) return;
+  const el=$("#pdPrice"); if(!el) return;
+  if(isPack(p)) el.innerHTML = packPriceHTML(p);
+  const pts=$("#pdPts"); if(pts){ const unit = isPack(p)? p.packs[pdPack].price : p.price; pts.textContent = "Earn "+Math.max(1,Math.round(unit*10))+" KeyNest points"; }
+  const tot=$("#pdTotal"); if(tot){ const unit = isPack(p)? p.packs[pdPack].price : p.price; tot.textContent = money(unit*pdQty); }
+}
+function openProduct(id){
+  const p = byId(id); pdId=id; pdQty=1; pdPack = isPack(p)? Math.min(2, p.packs.length-1) : 0;
+  const oos = p.mode==="auto" && p.stock<=0;
+  const denomBlock = isPack(p)
+    ? '<div style="font-family:Chakra Petch;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin-top:16px">1 · Select pack</div>'
+      + '<div class="denoms" id="denoms">'+p.packs.map((k,i)=>'<button class="denom'+(i===pdPack?" on":"")+'" data-denom="'+i+'">'+(k.bonus?'<span class="d-bonus">'+esc(k.bonus)+'</span>':"")+'<span class="d-amt">'+esc(k.amt)+'</span><span class="d-sub">'+esc(p.platform)+'</span><span class="d-price">'+money(k.price)+'</span></button>').join("")+'</div>'
+      + '<div style="font-family:Chakra Petch;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin-top:14px">2 · Your '+esc(p.topup)+'</div>'
+      + '<input class="uidin" id="pdUid" type="text" placeholder="Enter your '+esc(p.topup)+' — no password needed" style="margin-top:8px"/>'
+    : "";
+  const priceBlock = isPack(p)
+    ? '<div id="pdPrice" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px">'+packPriceHTML(p)+'</div>'
+    : '<div style="display:flex;align-items:baseline;gap:10px;margin-top:14px;flex-wrap:wrap"><span class="price" style="font-size:30px">'+money(p.price)+'</span><span class="was" style="font-size:16px">'+money(p.mrp)+'</span><span style="background:linear-gradient(145deg,var(--gold2),var(--gold-deep));color:var(--gold-ink);font-weight:800;border-radius:8px;padding:3px 9px">−'+offPct(p)+'%</span></div>';
+  $("#pdBody").innerHTML =
+    '<div class="pd-grid"><div class="pd-cover"><span class="badge-off">−'+offPct(p)+'%</span>'+tileHTML(p)+'</div>'
+    + '<div><h2 style="font-size:23px;line-height:1.2">'+esc(p.name)+'</h2>'
+    + '<div style="color:var(--ink2);font-weight:600;margin-top:3px">'+esc(p.sub)+'</div>'
+    + '<div class="meta" style="margin-top:8px"><span class="star">★ '+p.rating+'</span><span>'+p.rc.toLocaleString()+' reviews</span><span>'+p.sold.toLocaleString()+' sold</span></div>'
+    + priceBlock
+    + '<div style="margin-top:6px">'+stockLabel(p)+'</div>'
+    + '<div class="facts">'
+    + '<div class="fact"><span>Region</span><b>'+p.region+' — works in Bangladesh</b></div>'
+    + '<div class="fact"><span>Platform</span><b>'+p.platform+'</b></div>'
+    + '<div class="fact"><span>Delivery</span><b>'+(p.mode==="auto"?"⚡ Instant — under 30 seconds":(isPack(p)?"Official top-up — 15 min to 2 hours":"Manual — 30 min to 6 hours"))+'</b></div>'
+    + '<div class="fact"><span>Rewards</span><b id="pdPts">Earn '+(Math.max(1,Math.round((isPack(p)?p.packs[pdPack].price:p.price)*10)))+' KeyNest points</b></div></div>'
+    + '<p style="color:var(--ink2);margin:0">'+esc(p.about)+'</p>'
+    + denomBlock
+    + '<div class="steps"><div class="step"><b>Step 1</b>'+(isPack(p)?"Pick a pack &amp; enter your "+esc(p.topup):"Add to cart")+'</div><div class="step"><b>Step 2</b>Pay with bKash, Nagad or card</div><div class="step"><b>Step 3</b>'+(isPack(p)?"Credit lands in your account":"Key lands in My Library")+'</div></div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px"><span class="qty"><button id="qMinus" aria-label="Decrease quantity">−</button><input id="qVal" value="1" readonly aria-label="Quantity"/><button id="qPlus" aria-label="Increase quantity">+</button></span>'
+    + '<button class="btn btn-o" id="pdAdd" '+(oos?"disabled":"")+'>Add to cart</button>'
+    + '<button class="btn btn-gold" id="pdBuy" '+(oos?"disabled":"")+'>'+(isPack(p)?"Top up":"Buy")+' · <span id="pdTotal">'+money((isPack(p)?p.packs[pdPack].price:p.price))+'</span></button></div>'
+    + '</div></div>';
+  $("#pdScrim").classList.add("on");
+  document.querySelectorAll("[data-denom]").forEach(b=>b.onclick=()=>{
+    pdPack=Number(b.dataset.denom);
+    document.querySelectorAll("[data-denom]").forEach(x=>x.classList.toggle("on", Number(x.dataset.denom)===pdPack));
+    refreshPdPrice();
+  });
+  $("#qMinus").onclick=()=>{ pdQty=Math.max(1,pdQty-1); $("#qVal").value=pdQty; refreshPdPrice(); };
+  $("#qPlus").onclick=()=>{ pdQty=Math.min(10,pdQty+1); $("#qVal").value=pdQty; refreshPdPrice(); };
+  const doAdd=(open)=>{ addToCart(pdId, pdQty, isPack(byId(pdId))? pdPack : -1, $("#pdBuy")); $("#pdScrim").classList.remove("on"); if(open) openCart(); };
+  $("#pdAdd").onclick=()=>doAdd(false);
+  $("#pdBuy").onclick=()=>doAdd(true);
+}
+</script>
+
+<script>
+"use strict";
+/* ============================== CART ============================== */
+function cartKey(pid, variant){ return pid+"|"+(variant||""); }
+function linePrice(l){ const p=byId(l.pid); if(isPack(p)&&l.pack>=0) return p.packs[l.pack].price; return p.price; }
+function lineVariant(l){ const p=byId(l.pid); if(isPack(p)&&l.pack>=0) return p.packs[l.pack].amt; return l.variant||""; }
+function cartCount(){ return Object.values(state.cart).reduce((a,l)=>a+l.qty,0); }
+function cartTotal(){ return Object.values(state.cart).reduce((a,l)=>a+linePrice(l)*l.qty,0); }
+function addToCart(id, q, packIdx, fromEl){
+  const p=byId(id);
+  const key=cartKey(id, isPack(p)&&packIdx>=0 ? p.packs[packIdx].amt : "");
+  const cur=state.cart[key];
+  const newQty=(cur?cur.qty:0)+q;
+  if(p.mode==="auto" && newQty > p.stock){ toast("Only "+p.stock+" keys in stock for "+p.name, true); return; }
+  if(cur) cur.qty=newQty; else state.cart[key]={pid:id, pack:(packIdx===undefined?-1:packIdx), variant:"", qty:q};
+  renderCart(); flyToCart(fromEl);
+  toast("Added — "+p.name+(isPack(p)&&packIdx>=0? " · "+p.packs[packIdx].amt : ""));
+}
+function renderPoints(){
+  const b=$("#ptsBal"), l=$("#ptsLbl"); if(!b||!l) return;
+  if(state.user){ b.textContent=state.points.toLocaleString(); l.textContent="Your points"; }
+  else { b.textContent="10 pts / $1"; l.textContent="Earn on every order"; }
+}
+function renderCart(){
+  $("#cartN").textContent = cartCount();
+  renderPoints();
+  const box=$("#ditems");
+  const keys=Object.keys(state.cart);
+  if(!keys.length){
+    box.innerHTML='<div class="empty"><h3>Cart is empty</h3>Add a top-up pack, game, gift card or subscription to get started.</div>';
+    $("#dfoot").innerHTML=""; return;
+  }
+  box.innerHTML = keys.map(key=>{ const l=state.cart[key], p=byId(l.pid), v=lineVariant(l);
+    return '<div class="ditem"><div class="thumb">'+tileHTML(p,true)+'</div>'
+    + '<div style="flex:1;min-width:0"><b style="font-size:14px;font-family:Chakra Petch">'+esc(p.name)+(v?' · <span style="color:var(--gold2)">'+esc(v)+'</span>':"")+'</b><div style="color:var(--ink3);font-size:12px;font-weight:600">'+p.platform+" · "+p.region+" · "+(p.mode==="auto"?"Instant":(isPack(p)?"Top-up":"Manual"))+'</div>'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="qty"><button data-cq="'+esc(key)+'|-1">−</button><input value="'+l.qty+'" readonly/><button data-cq="'+esc(key)+'|1">+</button></span>'
+    + '<b style="color:var(--gold2)">'+money(linePrice(l)*l.qty)+'</b></div></div>'
+    + '<button class="chipbtn" data-rm="'+esc(key)+'" aria-label="Remove" style="align-self:flex-start;padding:4px 9px">✕</button></div>';
+  }).join("");
+  const sub=cartTotal(), disc=sub*state.promo;
+  $("#dfoot").innerHTML =
+    '<div class="promo"><input id="promoIn" placeholder="Promo code (try WELCOME10)" value="'+esc(state.promoCode)+'"/><button class="btn btn-o btn-sm" id="promoBtn">Apply</button></div>'
+    + '<div class="sumrow"><span>Subtotal</span><span>'+money(sub)+'</span></div>'
+    + (state.promo? '<div class="sumrow" style="color:var(--gold)"><span>Promo '+esc(state.promoCode)+'</span><span>−'+money(disc)+'</span></div>':"")
+    + '<div class="sumrow"><span>Processing fee</span><span>$0.00</span></div>'
+    + '<div class="sumrow" style="color:var(--gold2)"><span>KeyNest points earned</span><span>+'+Math.round(sub*10)+' pts</span></div>'
+    + '<div class="sumrow total"><span>Total</span><span>'+money(sub-disc)+'</span></div>'
+    + '<button class="btn btn-gold" id="checkoutBtn" style="width:100%">Checkout</button>'
+    + '<div style="text-align:center;color:var(--ink3);font-size:12px;font-weight:600">Keys release only after payment confirms</div>';
+  $("#promoBtn").onclick=()=>{
+    const v=$("#promoIn").value.trim().toUpperCase();
+    if(v==="WELCOME10"){ state.promo=0.10; state.promoCode=v; toast("Promo applied — 10% off"); }
+    else { state.promo=0; state.promoCode=""; toast("Invalid promo code", true); }
+    renderCart();
+  };
+  $("#checkoutBtn").onclick=()=>{
+    if(!state.user){ state.pendingCheckout=true; $("#drawer").classList.remove("on"); openAuth("signup", "Create a free account or sign in to complete your purchase — your keys are delivered straight to your library."); return; }
+    openCheckout();
+  };
+}
+function openCart(){ renderCart(); $("#drawer").classList.add("on"); }
+
+/* ============================== CHECKOUT ============================== */
+let payMethod="bKash";
+function openCheckout(){
+  $("#drawer").classList.remove("on");
+  const sub=cartTotal(), disc=sub*state.promo;
+  const rows=Object.values(state.cart).map(l=>{ const p=byId(l.id||l.pid), v=lineVariant(l);
+    return '<div class="sumrow"><span>'+esc(p.name)+(v?" · "+esc(v):"")+" × "+l.qty+'</span><span>'+money(linePrice(l)*l.qty)+'</span></div>'; }).join("");
+  $("#coBody").innerHTML =
+    '<h3 style="font-size:19px;margin-bottom:12px">Checkout</h3>'+rows
+    + (state.promo? '<div class="sumrow" style="color:var(--gold)"><span>Promo</span><span>−'+money(disc)+'</span></div>':"")
+    + '<div class="sumrow"><span>KeyNest points earned</span><span style="color:var(--gold2)">+'+Math.round((sub-disc)*10)+' pts</span></div>'
+    + '<div class="sumrow total"><span>Total</span><span>'+money(sub-disc)+'</span></div>'
+    + '<p style="color:var(--ink2);font-size:13px;margin:16px 0 8px;font-weight:700">Payment method</p>'
+    + '<div class="paym" id="paym">'
+    + '<button data-pay="bKash" class="on">bKash</button><button data-pay="Nagad">Nagad</button><button data-pay="Card · Paddle">Card</button></div>'
+    + '<div style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin-top:14px;font-size:13.5px;color:var(--ink2)">Delivering to <b style="color:var(--ink)">'+esc(state.user.email)+'</b> · keys &amp; top-ups are tracked in My Library</div>'
+    + '<button class="btn btn-gold" id="payBtn" style="width:100%;margin-top:14px">Pay '+money(sub-disc)+'</button>'
+    + '<p style="color:var(--ink3);font-size:12px;text-align:center;margin:10px 0 0">Demo checkout — no real payment is taken.</p>';
+  $("#coScrim").classList.add("on");
+  payMethod="bKash";
+  document.querySelectorAll("#paym button").forEach(b=>b.onclick=()=>{
+    document.querySelectorAll("#paym button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); payMethod=b.dataset.pay;
+  });
+  $("#payBtn").onclick=placeOrder;
+}
+function placeOrder(){
+  $("#coBody").innerHTML='<div style="text-align:center;padding:18px 0"><div class="spin"></div><b>Confirming payment…</b><p style="color:var(--ink2)">Confirming with your payment provider — this takes a few seconds.</p></div>';
+  setTimeout(()=>{
+    const oid="KN-"+(++state.orderSeq);
+    const lines=Object.values(state.cart);
+    const items=lines.map(l=>({pid:l.pid, qty:l.qty, price:linePrice(l), variant:lineVariant(l)}));
+    const total=items.reduce((a,i)=>a+i.price*i.qty,0)*(1-state.promo);
+    let delivered=[], pending=[];
+    items.forEach(it=>{
+      const p=byId(it.pid);
+      for(let n=0;n<it.qty;n++){
+        if(p.mode==="auto" && p.stock>0){
+          p.stock--; p.soldKeys++;
+          const key = p.pool.length? p.pool.shift() : genKey();
+          state.library.unshift({oid, pid:p.id, variant:it.variant, key, status:"delivered", when:"Just now", owner:state.user.email});
+          delivered.push({p,key});
+        } else {
+          state.library.unshift({oid, pid:p.id, variant:it.variant, key:null, status:"pending", when:"Just now", owner:state.user.email});
+          pending.push(p);
+        }
+      }
+    });
+    const earned=Math.round(total*10); state.points+=earned;
+    const status = pending.length? (delivered.length? "Partially delivered":"Pending delivery") : "Delivered";
+    state.orders.unshift({id:oid, when:"Just now", customer:state.user.email, items, total, pay:payMethod, status});
+    state.cart={}; state.promo=0; state.promoCode=""; renderCart(); renderGrid(); renderLibrary(); renderAdmin(); renderAccount();
+    $("#coBody").innerHTML =
+      '<div style="text-align:center"><div style="width:56px;height:56px;border-radius:50%;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;margin:6px auto 12px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>'
+      + '<h3 style="font-size:20px">Order '+oid+' confirmed</h3>'
+      + '<p style="color:var(--ink2)">'+(delivered.length? delivered.length+" key(s) delivered instantly to your Library. ":"")
+      + (pending.length? pending.length+" top-up(s)/item(s) are being processed — they will show as delivered in your Library within a few hours. ":"")
+      + 'You earned <b style="color:var(--gold2)">'+earned+' KeyNest points</b>.</p>'
+      + (delivered.length? '<div style="text-align:left;margin:14px 0">'+delivered.map(d=>'<div class="keybox" style="margin-bottom:8px"><code>'+d.key+'</code><span class="pill ok">'+esc(d.p.name)+'</span></div>').join("")+'</div>':"")
+      + '<div style="display:flex;gap:10px;justify-content:center;margin-top:16px"><button class="btn btn-gold" id="goLib">Open My Library</button><button class="btn btn-o" data-close="coScrim">Keep shopping</button></div></div>';
+    bindClosers();
+    $("#goLib").onclick=()=>{ $("#coScrim").classList.remove("on"); switchView("library"); };
+  }, 1100);
+}
+
+/* ============================== LIBRARY ============================== */
+function myLibrary(){ return state.library.map((li,idx)=>({li,idx})).filter(x=> state.user && x.li.owner===state.user.email); }
+function renderLibrary(){
+  const mine = state.user? myLibrary() : [];
+  const lb=$("#libN"); lb.textContent=mine.length; lb.style.display=mine.length? "":"none";
+  $("#libGate").style.display = state.user? "none":"block";
+  $("#libEmpty").style.display = (state.user && !mine.length)? "block":"none";
+  $("#libList").innerHTML = mine.map(({li,idx})=>{ const p=byId(li.pid);
+    return '<div class="lib-item"><div class="thumb">'+tileHTML(p,true)+'</div>'
+    + '<div style="min-width:170px"><b style="font-family:Chakra Petch">'+esc(p.name)+(li.variant?' · <span style="color:var(--gold2)">'+esc(li.variant)+'</span>':"")+'</b><div style="color:var(--ink3);font-size:12.5px;font-weight:600">Order '+li.oid+" · "+li.when+'</div></div>'
+    + (li.status==="delivered"
+        ? (li.key
+          ? '<div class="keybox"><code data-key="'+idx+'">•••••-•••••-•••••</code><button class="btn btn-o btn-sm" data-reveal="'+idx+'">Reveal</button><button class="btn btn-gold btn-sm" data-copy="'+idx+'">Copy</button></div><span class="pill ok">Delivered</span>'
+          : '<div class="keybox"><code>Top-up credited to your account</code></div><span class="pill ok">Delivered</span>')
+        : '<div class="keybox"><code style="color:var(--ink3)">Processing — usually 15 min to 2 hours…</code></div><span class="pill wait">Pending</span>')
+    + '</div>';
+  }).join("");
+}
+
+/* ============================== ADMIN ============================== */
+function pendingItems(){
+  const out=[];
+  state.library.forEach((li,idx)=>{ if(li.status==="pending") out.push({li,idx}); });
+  return out;
+}
+function statusPill(s){ return s==="Delivered"? '<span class="pill ok">Delivered</span>' : '<span class="pill wait">'+esc(s)+'</span>'; }
+function renderAdmin(){
+  const pend=pendingItems();
+  $("#penN").textContent = pend.length? "("+pend.length+")":"";
+  const mpn=$("#menuPenN"); mpn.textContent=pend.length; mpn.style.display=pend.length? "":"none";
+  const revenue = state.orders.reduce((a,o)=>a+o.total,0);
+  const keysInVault = PRODUCTS.filter(p=>p.mode==="auto").reduce((a,p)=>a+p.stock,0);
+  $("#stats").innerHTML =
+    '<div class="stat"><div class="k">Revenue</div><div class="v">'+money(revenue)+'</div><div class="d" style="color:var(--gold)">▲ from '+state.orders.length+' orders</div></div>'
+    + '<div class="stat"><div class="k">Orders</div><div class="v">'+state.orders.length+'</div><div class="d">All orders placed on the store</div></div>'
+    + '<div class="stat"><div class="k">Keys in vault</div><div class="v">'+keysInVault+'</div><div class="d">Across '+PRODUCTS.filter(p=>p.mode==="auto").length+' auto-delivery products</div></div>'
+    + '<div class="stat"><div class="k">Pending delivery</div><div class="v" style="color:'+(pend.length?"var(--gold)":"inherit")+'">'+pend.length+'</div><div class="d">Manual delivery queue</div></div>';
+  const low = PRODUCTS.filter(p=>p.mode==="auto" && p.stock<=5);
+  $("#alerts").innerHTML = low.length? low.map(p=>'<div class="alert"><span aria-hidden="true">⚠</span><span><b>'+esc(p.name)+'</b> — only <b>'+p.stock+' keys</b> left in the vault. Import a new supplier batch before it sells out.</span></div>').join("")
+    : '<p style="color:var(--ink2);margin:0">All auto-delivery products are stocked above the alert level.</p>';
+  const itemNames=o=>o.items.map(i=>esc(byId(i.pid).name)+(i.variant?" ("+esc(i.variant)+")":"")+" ×"+i.qty).join("<br>");
+  $("#dashOrders").innerHTML = state.orders.slice(0,5).map(o=>'<tr><td class="mono">'+o.id+'</td><td>'+esc(o.customer)+'</td><td>'+o.items.reduce((a,i)=>a+i.qty,0)+' item(s)</td><td><b>'+money(o.total)+'</b></td><td>'+o.pay+'</td><td>'+statusPill(o.status)+'</td></tr>').join("");
+  $("#ordTbl").innerHTML = state.orders.map(o=>'<tr><td class="mono">'+o.id+'</td><td>'+o.when+'</td><td>'+esc(o.customer)+'</td><td>'+itemNames(o)+'</td><td><b>'+money(o.total)+'</b></td><td>'+o.pay+'</td><td>'+statusPill(o.status)+'</td></tr>').join("");
+  $("#vaultTbl").innerHTML = PRODUCTS.map(p=>'<tr><td><b>'+esc(p.name)+'</b></td><td>'+(p.mode==="auto"?'<span class="tag inst">⚡ Auto</span>':'<span class="tag man">Manual</span>')+'</td><td><b>'+(p.mode==="auto"?p.stock:"—")+'</b></td><td>'+p.soldKeys+'</td><td>'+(p.mode==="manual"?'<span class="stock low">Supplied to order</span>':p.stock<=0?'<span class="stock out">Out of stock</span>':p.stock<=5?'<span class="stock low">Low stock</span>':'<span class="stock ok">Healthy</span>')+'</td></tr>').join("");
+  $("#batchTbl").innerHTML = state.batches.map(b=>'<tr><td class="mono">'+b.id+'</td><td>'+esc(byId(b.pid).name)+'</td><td>'+esc(b.supplier)+'</td><td>'+b.n+'</td><td>$'+Number(b.cost).toFixed(2)+'</td><td>'+b.when+'</td></tr>').join("");
+  $("#prodTbl").innerHTML = PRODUCTS.map(p=>'<tr><td><b>'+esc(p.name)+'</b><div style="color:var(--ink3);font-size:12px">'+esc(p.sub)+'</div></td><td>'+p.cat+'</td><td><b>'+money(p.price)+'</b> <span class="was">'+money(p.mrp)+'</span></td><td>'+(p.mode==="auto"?p.stock:"—")+'</td><td><button class="btn btn-o btn-sm" data-mode="'+p.id+'">'+(p.mode==="auto"?"⚡ Auto":"Manual")+' — switch</button></td></tr>').join("");
+  $("#pendEmpty").style.display = pend.length? "none":"block";
+  $("#pendList").innerHTML = pend.map(({li,idx})=>{ const p=byId(li.pid);
+    return '<div class="lib-item"><div class="thumb">'+tileHTML(p,true)+'</div>'
+    + '<div style="min-width:170px"><b style="font-family:Chakra Petch">'+esc(p.name)+(li.variant?' · <span style="color:var(--gold2)">'+esc(li.variant)+'</span>':"")+'</b><div style="color:var(--ink3);font-size:12.5px;font-weight:600">Order '+li.oid+" · "+li.when+" · "+esc((state.orders.find(o=>o.id===li.oid)||{}).customer||"")+'</div></div>'
+    + '<div class="fulfil" style="flex:1"><input placeholder="Paste key / code from supplier (or top-up ref)…" id="fk-'+idx+'"/><button class="btn btn-gold btn-sm" data-fulfil="'+idx+'">Deliver</button></div></div>';
+  }).join("");
+  const sel=$("#impProduct");
+  sel.innerHTML = PRODUCTS.map(p=>'<option value="'+p.id+'">'+esc(p.name)+' ('+(p.mode==="auto"?p.stock+" in stock":"manual")+')</option>').join("");
+}
+function importKeys(){
+  const pid=$("#impProduct").value, p=byId(pid);
+  const raw=$("#impKeys").value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(!raw.length){ $("#impMsg").textContent="Paste at least one key first."; return; }
+  const existing=new Set();
+  PRODUCTS.forEach(x=>x.pool.forEach(k=>existing.add(k)));
+  state.library.forEach(li=>{ if(li.key) existing.add(li.key); });
+  let added=0, dup=0;
+  raw.forEach(k=>{ if(existing.has(k)){ dup++; } else { existing.add(k); p.pool.push(k); added++; } });
+  if(p.mode==="auto") p.stock+=added; else if(added>0){ p.mode="auto"; p.stock+=added; }
+  const bid="B-"+(++state.batchSeq);
+  state.batches.unshift({id:bid, pid, supplier:$("#impSupplier").value.trim()||"Unspecified supplier", n:added, cost:parseFloat($("#impCost").value)||0, when:"Just now"});
+  $("#impMsg").textContent = "Imported "+added+" key(s) as batch "+bid+(dup? " · "+dup+" duplicate(s) rejected":"")+".";
+  $("#impKeys").value=""; $("#impSupplier").value=""; $("#impCost").value="";
+  toast("Vault updated — "+p.name+" now has "+p.stock+" keys");
+  renderAdmin(); renderGrid();
+}
+
+/* ============================== ACCOUNT / AUTH ============================== */
+function initials(n){ return n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase(); }
+function renderAuth(){
+  const u=state.user;
+  $("#authBtn").style.display = u? "none":"";
+  $("#joinBtn").style.display = u? "none":"";
+  const chip=$("#userChip");
+  if(u){ chip.style.display=""; chip.innerHTML='<span class="avatar">'+initials(u.name)+'</span> '+esc(u.name.split(" ")[0]); }
+  else chip.style.display="none";
+  renderPoints();
+  renderMenuUser();
+}
+function renderMenuUser(){
+  const mu=$("#menuUser"); if(!mu) return;
+  const u=state.user;
+  if(u){
+    mu.innerHTML='<div style="display:flex;gap:12px;align-items:center"><span class="avatar" style="width:42px;height:42px;font-size:16px">'+initials(u.name)+'</span><div style="min-width:0"><b style="display:block">'+esc(u.name)+'</b><span style="color:var(--ink3);font-size:12.5px;font-weight:600">'+esc(u.email)+'</span></div></div><div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold2)">★ '+state.points.toLocaleString()+' KeyNest points</div>';
+  } else {
+    mu.innerHTML='<b style="display:block;margin-bottom:4px">Welcome to KeyNest</b><span style="color:var(--ink2);font-size:13px">Sign in to see your library, orders, keys and points.</span><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-gold btn-sm" id="menuSignin">Sign in</button><button class="btn btn-o btn-sm" id="menuJoin">Create account</button></div>';
+    $("#menuSignin").onclick=()=>{ closeMenu(); openAuth("signin"); };
+    $("#menuJoin").onclick=()=>{ closeMenu(); openAuth("signup"); };
+  }
+}
+function openAuth(mode, note){
+  state.authMode = mode||"signin";
+  const m=state.authMode;
+  $("#authBody").innerHTML =
+    '<h3 style="font-size:20px;margin-bottom:4px">'+(m==="signup"?"Create your account":"Welcome back")+'</h3>'
+    + '<p style="color:var(--ink2);font-size:13.5px;margin:0 0 16px">'+(note? esc(note) : (m==="signup"?"Buy in under a minute — keys are delivered to your library instantly after payment, and every order earns points.":"Sign in to view your library, orders, keys and points."))+'</p>'
+    + '<div class="authtabs"><button data-amode="signin" class="'+(m==="signin"?"on":"")+'">Sign in</button><button data-amode="signup" class="'+(m==="signup"?"on":"")+'">Create account</button></div>'
+    + (m==="signup"? '<div class="field"><label for="auName">Full name</label><input id="auName" type="text" placeholder="Your name" autocomplete="name"/></div>':"")
+    + '<div class="field"><label for="auEmail">Email</label><input id="auEmail" type="email" placeholder="you@example.com" autocomplete="email"/></div>'
+    + '<div class="field"><label for="auPass">Password</label><input id="auPass" type="password" placeholder="'+(m==="signup"?"At least 6 characters":"Your password")+'" autocomplete="'+(m==="signup"?"new-password":"current-password")+'"/></div>'
+    + '<div id="authErr" style="color:var(--red);font-size:13px;font-weight:700;min-height:18px;margin-bottom:8px"></div>'
+    + '<button class="btn btn-gold" id="authGo" style="width:100%">'+(m==="signup"?"Create account":"Sign in")+'</button>'
+    + '<button class="btn btn-o" id="authDemo" style="width:100%;margin-top:8px">Continue with the demo account</button>'
+    + '<p style="color:var(--ink3);font-size:12px;text-align:center;margin:12px 0 0">Demo sign-up — your account lives only in this browser session.</p>';
+  $("#authScrim").classList.add("on");
+  document.querySelectorAll("[data-amode]").forEach(b=>b.onclick=()=>openAuth(b.dataset.amode, note));
+  $("#authGo").onclick=submitAuth;
+  $("#authDemo").onclick=()=>{ signInAs(state.accounts["demo@keynest.com"]); toast("Signed in with the demo account"); };
+}
+function authFail(msg){ $("#authErr").textContent=msg; }
+function submitAuth(){
+  const email=($("#auEmail").value||"").trim().toLowerCase();
+  const pass=$("#auPass").value||"";
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return authFail("Enter a valid email address.");
+  if(state.authMode==="signup"){
+    const name=($("#auName").value||"").trim();
+    if(name.length<2) return authFail("Enter your name.");
+    if(pass.length<6) return authFail("Password needs at least 6 characters.");
+    if(state.accounts[email]) return authFail("An account with this email already exists — sign in instead.");
+    const acc={name, email, pass, since:"Oct 2026"};
+    state.accounts[email]=acc; signInAs(acc); toast("Account created — welcome, "+name.split(" ")[0]+"!");
+  } else {
+    const acc=state.accounts[email];
+    if(!acc) return authFail("No account found for this email — create one first.");
+    if(acc.pass!==pass) return authFail("Incorrect password. Try again, or use the demo account below.");
+    signInAs(acc); toast("Signed in — welcome back, "+acc.name.split(" ")[0]+"!");
+  }
+}
+function signInAs(acc){
+  state.user={name:acc.name, email:acc.email, since:acc.since};
+  $("#authScrim").classList.remove("on");
+  renderAuth(); renderLibrary(); renderAccount();
+  if(state.pendingCheckout){ state.pendingCheckout=false; if(cartCount()) openCheckout(); }
+}
+function signOut(){
+  state.user=null; state.pendingCheckout=false;
+  renderAuth(); renderLibrary(); renderAccount();
+  if(state.view==="library"||state.view==="account") switchView("store");
+  toast("Signed out. See you soon!");
+}
+function renderAccount(){
+  const u=state.user;
+  $("#accGate").style.display = u? "none":"block";
+  $("#accBody").style.display = u? "block":"none";
+  if(!u) return;
+  const mine=state.orders.filter(o=>o.customer===u.email);
+  const keys=state.library.filter(l=>l.owner===u.email);
+  const pend=keys.filter(l=>l.status==="pending").length;
+  $("#accBody").innerHTML =
+    '<div class="prof"><div class="panel" style="margin:0"><div style="display:flex;gap:14px;align-items:center;margin-bottom:14px"><span class="avatar lg">'+initials(u.name)+'</span><div><h3 style="font-size:18px">'+esc(u.name)+'</h3><div style="color:var(--ink2);font-size:13px">'+esc(u.email)+'</div><div style="color:var(--ink3);font-size:12.5px">Member since '+esc(u.since||"Oct 2026")+'</div></div></div>'
+    + '<div style="background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:10px;padding:11px 13px;margin-bottom:14px"><b style="color:var(--gold2);font-family:Chakra Petch;font-size:19px">★ '+state.points.toLocaleString()+' points</b><div style="font-size:12.5px;color:var(--ink2)">100 points = $1 bonus credit on top-up packs</div></div>'
+    + '<div class="field"><label for="pfName">Display name</label><input id="pfName" type="text" value="'+esc(u.name)+'"/></div>'
+    + '<div class="field"><label for="pfCountry">Country</label><select id="pfCountry"><option>Bangladesh</option><option>India</option><option>United States</option><option>United Kingdom</option><option>United Arab Emirates</option><option>Other</option></select></div>'
+    + '<button class="btn btn-gold btn-sm" id="pfSave">Save changes</button> <button class="btn btn-o btn-sm" id="pfOut">Sign out</button></div>'
+    + '<div><div class="stats" style="margin-bottom:16px">'
+    + '<div class="stat"><div class="k">Orders</div><div class="v">'+mine.length+'</div><div class="d">All time</div></div>'
+    + '<div class="stat"><div class="k">Keys owned</div><div class="v">'+keys.filter(l=>l.status==="delivered").length+'</div><div class="d">In your library</div></div>'
+    + '<div class="stat"><div class="k">Awaiting delivery</div><div class="v" style="color:'+(pend?"var(--gold)":"inherit")+'">'+pend+'</div><div class="d">Manual-delivery items</div></div></div>'
+    + '<h3 style="font-size:16.5px;margin-bottom:10px">Order history</h3>'
+    + (mine.length? mine.map(o=>'<div class="ordrow"><span><b class="mono">'+o.id+'</b> · '+o.when+'<br><span style="color:var(--ink2)">'+o.items.map(i=>esc(byId(i.pid).name)+(i.variant?" ("+esc(i.variant)+")":"")+" ×"+i.qty).join(", ")+'</span></span><span style="text-align:right"><b>'+money(o.total)+'</b><br>'+statusPill(o.status)+'</span></div>').join("") : '<div class="empty"><h3>No orders yet</h3>Your orders will show up here after your first purchase.</div>')
+    + '<button class="btn btn-o" id="accShop">Browse the store</button></div></div>';
+  $("#pfSave").onclick=()=>{ const n=$("#pfName").value.trim(); if(n.length<2){ toast("Name looks too short", true); return; } u.name=n; state.accounts[u.email].name=n; renderAuth(); renderAccount(); toast("Profile saved"); };
+  $("#pfOut").onclick=signOut;
+  $("#accShop").onclick=()=>switchView("store");
+}
+
+/* ============================== VIEW SWITCHING ============================== */
+function switchView(v){
+  state.view=v;
+  document.querySelectorAll("[data-menu-view]").forEach(t=>t.classList.toggle("on", t.dataset.menuView===v));
+  document.querySelectorAll(".view").forEach(s=>{ const on = s.id==="view-"+v; if(on && !s.classList.contains("on")){ s.classList.remove("on"); void s.offsetWidth; } s.classList.toggle("on", on); });
+  if(v==="admin") renderAdmin();
+  if(v==="library") renderLibrary();
+  if(v==="account") renderAccount();
+  window.scrollTo({top:0});
+}
+function switchATab(t){
+  state.atab=t;
+  document.querySelectorAll(".atab").forEach(b=>b.classList.toggle("on", b.dataset.atab===t));
+  document.querySelectorAll(".apane").forEach(p=>p.style.display = p.id==="apane-"+t? "block":"none");
+  renderAdmin();
+}
+
+/* ============================== EVENTS ============================== */
+function bindClosers(){
+  document.querySelectorAll("[data-close]").forEach(b=>{ b.onclick=()=>document.getElementById(b.dataset.close).classList.remove("on"); });
+}
+document.addEventListener("click", e=>{
+  const au=e.target.closest("[data-auth]"); if(au) openAuth(au.dataset.auth);
+  const open=e.target.closest("[data-open]"); if(open) openProduct(open.dataset.open);
+  const add=e.target.closest("[data-add]"); if(add && !add.disabled){ const p=byId(add.dataset.add); if(isPack(p)) openProduct(p.id); else addToCart(p.id,1,-1,add); }
+  const sb=e.target.closest("[data-slide-buy]"); if(sb) openProduct(sb.dataset.slideBuy);
+  const sv=e.target.closest("[data-slide-view]"); if(sv) openProduct(sv.dataset.slideView);
+  const dot=e.target.closest("[data-slide]"); if(dot){ goSlide(Number(dot.dataset.slide)); heroAuto(); }
+  const cq=e.target.closest("[data-cq]"); if(cq){ const parts=cq.dataset.cq.split("|"); const d=Number(parts.pop()); const key=parts.join("|"); const l=state.cart[key]; if(!l) return; const p=byId(l.pid); let q=l.qty+d;
+    if(q<=0) delete state.cart[key]; else if(p.mode==="auto"&&q>p.stock){ toast("Only "+p.stock+" keys in stock",true); } else l.qty=q; renderCart(); }
+  const rm=e.target.closest("[data-rm]"); if(rm){ delete state.cart[rm.dataset.rm]; renderCart(); }
+  const cat=e.target.closest("[data-cat]"); if(cat){ state.cat=cat.dataset.cat; renderCats(); renderGrid(); }
+  const mv=e.target.closest("[data-menu-view]"); if(mv){ switchView(mv.dataset.menuView); closeMenu(); }
+  const at=e.target.closest("[data-atab]"); if(at) switchATab(at.dataset.atab);
+  const rev=e.target.closest("[data-reveal]"); if(rev){ const li=state.library[Number(rev.dataset.reveal)]; const code=document.querySelector('[data-key="'+rev.dataset.reveal+'"]'); const shown=code.textContent.includes("•"); code.textContent= shown? li.key : "•••••-•••••-•••••"; rev.textContent= shown? "Hide":"Reveal"; }
+  const cp=e.target.closest("[data-copy]"); if(cp){ const li=state.library[Number(cp.dataset.copy)]; if(navigator.clipboard) navigator.clipboard.writeText(li.key); toast("Key copied — "+byId(li.pid).name); }
+  const ff=e.target.closest("[data-fulfil]"); if(ff){ const idx=Number(ff.dataset.fulfil); const inp=document.getElementById("fk-"+idx); const val=(inp.value||"").trim();
+    if(!val){ toast("Paste the supplier key or top-up reference first", true); return; }
+    const li=state.library[idx]; const p=byId(li.pid);
+    if(isPack(p)){ li.key=null; } else { li.key=val; }
+    li.status="delivered";
+    const ord=state.orders.find(o=>o.id===li.oid);
+    if(ord && !state.library.some(l=>l.oid===ord.id && l.status==="pending")) ord.status="Delivered";
+    toast("Delivered — customer can now see it in their Library"); renderAdmin(); renderLibrary(); }
+  const md=e.target.closest("[data-mode]"); if(md){ const p=byId(md.dataset.mode); p.mode = p.mode==="auto"? "manual":"auto"; toast(p.name+" is now "+(p.mode==="auto"?"⚡ Auto-delivery":"Manual delivery")); renderAdmin(); renderGrid(); }
+});
+$("#q").addEventListener("input", e=>{ state.q=e.target.value; if(state.view!=="store") switchView("store"); renderGrid(); });
+$("#sort").addEventListener("change", e=>{ state.sort=e.target.value; renderGrid(); });
+$("#cartBtn").addEventListener("click", openCart);
+$("#authBtn").addEventListener("click", ()=>openAuth("signin"));
+$("#joinBtn").addEventListener("click", ()=>openAuth("signup"));
+$("#userChip").addEventListener("click", ()=>switchView("account"));
+$("#hPrev").addEventListener("click", ()=>{ goSlide(slideIdx-1); heroAuto(); });
+$("#hNext").addEventListener("click", ()=>{ goSlide(slideIdx+1); heroAuto(); });
+$("#ptsBtn").addEventListener("click", ()=>{
+  $("#infoBody").innerHTML='<h3 style="font-size:19px;margin-bottom:8px">How KeyNest Rewards work</h3>'
+  + '<div style="color:var(--ink2);display:flex;flex-direction:column;gap:10px;font-size:14px">'
+  + '<p style="margin:0"><b style="color:var(--gold2)">Earn:</b> every $1 you spend earns <b style="color:var(--ink)">10 points</b> — games, gift cards, subscriptions and top-up packs all count.</p>'
+  + '<p style="margin:0"><b style="color:var(--gold2)">Redeem:</b> 100 points = <b style="color:var(--ink)">$1 bonus credit</b>, applied automatically at checkout on top-up packs.</p>'
+  + '<p style="margin:0"><b style="color:var(--gold2)">Bonus events:</b> flash-deal packs pay double points while the countdown runs.</p>'
+  + '<p style="margin:0">Your balance right now: <b style="color:var(--gold2)">'+state.points.toLocaleString()+' points</b> (≈ '+money(Math.floor(state.points/100))+ ' credit).</p></div>'
+  + '<button class="btn btn-gold" data-close="infoScrim" style="width:100%;margin-top:16px">Got it</button>';
+  $("#infoScrim").classList.add("on"); bindClosers();
+});
+/* slide-in menu */
+function openMenu(){ $("#menu").classList.add("on"); $("#menuScrim").classList.add("on"); $("#menuBtn").setAttribute("aria-expanded","true"); }
+function closeMenu(){ $("#menu").classList.remove("on"); $("#menuScrim").classList.remove("on"); $("#menuBtn").setAttribute("aria-expanded","false"); }
+$("#menuBtn").addEventListener("click", openMenu);
+$("#menuX").addEventListener("click", closeMenu);
+$("#menuScrim").addEventListener("click", closeMenu);
+$("#menuCur").addEventListener("click", ()=>$("#curBtn").click());
+$("#logoHome").addEventListener("click", ()=>{ closeMenu(); switchView("store"); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ closeMenu(); $("#drawer").classList.remove("on"); } });
+window.addEventListener("scroll", ()=>{ $("#topbar").classList.toggle("scrolled", window.scrollY>6); }, {passive:true});
+$("#drawerX").addEventListener("click", ()=>$("#drawer").classList.remove("on"));
+$("#curBtn").addEventListener("click", ()=>{ state.currency = state.currency==="USD"? "BDT":"USD"; $("#curBtn").textContent = state.currency==="USD"? "USD $":"BDT ৳"; const mc=$("#menuCur"); if(mc) mc.textContent = state.currency==="USD"? "USD $":"BDT ৳"; renderGrid(); renderCart(); renderHero(); goSlide(slideIdx); if(pdId && $("#pdScrim").classList.contains("on")) openProduct(pdId); });
+$("#impBtn").addEventListener("click", importKeys);
+document.querySelectorAll(".scrim").forEach(s=>s.addEventListener("click", e=>{ if(e.target===s) s.classList.remove("on"); }));
+bindClosers();
+
+/* countdown */
+let cdEnd = Date.now() + (4*3600+12*60+33)*1000;
+setInterval(()=>{
+  let d=Math.max(0, Math.floor((cdEnd-Date.now())/1000));
+  const h=Math.floor(d/3600), m=Math.floor(d%3600/60), s=d%60;
+  const H=$("#cdH"); if(H){ H.textContent=String(h).padStart(2,"0"); $("#cdM").textContent=String(m).padStart(2,"0"); $("#cdS").textContent=String(s).padStart(2,"0"); }
+}, 1000);
+
+/* init */
+renderHero(); goSlide(0); heroAuto(); initHeroTouch();
+renderCats(); renderGrid(); renderCart(); renderAuth(); renderLibrary(); renderAccount(); renderAdmin();
+</script>
+</body>
+</html>
